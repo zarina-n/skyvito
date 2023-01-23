@@ -1,17 +1,21 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import { Header, Nav, Main } from './RouteLayout.styled'
+import Button from '../uiKit/buttons/Button'
 
 const RouteLayout = () => {
   return (
     <div>
-      <header>
-        <nav>
-          <NavLink to="profile">Личный кабинет</NavLink>
-        </nav>
-      </header>
+      <Header>
+        <Nav>
+          <Button hoverColor="rgba(255, 255, 255, 0.15)" padding={'8px 24px'}>
+            <NavLink to="profile">Личный кабинет</NavLink>
+          </Button>
+        </Nav>
+      </Header>
 
-      <main>
+      <Main>
         <Outlet />
-      </main>
+      </Main>
     </div>
   )
 }
