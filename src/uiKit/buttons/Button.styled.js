@@ -8,6 +8,9 @@ export const StyledButton = styled.button`
   border-radius: 6px;
   border: 1px solid #ffffff;
   padding: ${(props) => props.padding};
+  margin: ${(props) => props.margin};
+
+  color: #ffffff;
 
   &:hover {
     background-color: ${(props) => props.hoverColor};

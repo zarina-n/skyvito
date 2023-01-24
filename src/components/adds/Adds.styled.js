@@ -4,10 +4,11 @@ import { NavLink } from 'react-router-dom'
 export const AddsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   column-gap: 26px;
   row-gap: 40px;
+  margin: 43px auto;
 `
 
 export const Add = styled.div`

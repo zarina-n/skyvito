@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { Header, Nav, Main } from './RouteLayout.styled'
 import Button from '../uiKit/buttons/Button'
+import Search from '../components/search/Search'
 
 const RouteLayout = () => {
   return (
@@ -14,6 +15,7 @@ const RouteLayout = () => {
       </Header>
 
       <Main>
+        <Search />
         <Outlet />
       </Main>
     </div>
