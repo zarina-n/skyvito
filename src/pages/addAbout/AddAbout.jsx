@@ -10,12 +10,9 @@ import {
   Text,
   SellerLink,
 } from './AddAbout.styled'
-import { useParams, Link } from 'react-router-dom'
 import Button from '../../uiKit/buttons/Button'
 
 const AddAbout = () => {
-  const { id } = useParams()
-
   const item = {
     name: 'Ракетка для большого тенниса Triumph Pro STС Б/У',
     price: '2 200 ₽',
