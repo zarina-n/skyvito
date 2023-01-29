@@ -1,13 +1,8 @@
 import { StyledButton } from './Button.styled'
 
-const Button = ({ children, padding, onClick, hoverColor, margin }) => {
+const Button = ({ children, onClick, margin }) => {
   return (
-    <StyledButton
-      onClick={onClick}
-      hoverColor={hoverColor}
-      padding={padding}
-      margin={margin}
-    >
+    <StyledButton onClick={onClick} margin={margin}>
       {children}
     </StyledButton>
   )

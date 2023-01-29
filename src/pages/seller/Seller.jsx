@@ -1,5 +1,5 @@
 import Adds from '../../components/adds/Adds'
-import Button from '../../uiKit/buttons/Button'
+import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import {
   Title,
   Heading,
@@ -15,7 +15,7 @@ const Seller = () => {
     sellerName: 'Кирилл Матвеев',
     city: 'Санкт-Петербург',
     sellerOnSiteSince: 'Продает товары с августа 2021',
-    phone: '123456789',
+    phone: '89051234567',
   }
   return (
     <>
@@ -27,10 +27,7 @@ const Seller = () => {
           <Details>{seller.city}</Details>
           <Details>{seller.sellerOnSiteSince}</Details>
 
-          <Button hoverColor="#0080C1" padding={'10px 37px'}>
-            <p> Показать телефон </p>
-            <span>8 905 ХХХ ХХ ХХ</span>
-          </Button>
+          <ShowNumberButton phoneNumber={seller.phone}></ShowNumberButton>
         </About>
       </SellerInfo>
 

@@ -5,7 +5,6 @@ import GlobalStyle from './styles/globalStyles'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './styles/Colors.styled'
 
-console.log(theme)
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>

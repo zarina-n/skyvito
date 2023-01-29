@@ -10,7 +10,7 @@ import {
   Text,
   SellerLink,
 } from './AddAbout.styled'
-import Button from '../../uiKit/buttons/Button'
+import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 
 const AddAbout = () => {
   const item = {
@@ -20,7 +20,7 @@ const AddAbout = () => {
     timeStamp: 'Сегодня в 10:45',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    phone: '12345789',
+    phone: '89051234567',
     sellerName: 'Кирилл',
     sellerOnSiteSince: 'Продает товары с августа 2021',
   }
@@ -47,10 +47,7 @@ const AddAbout = () => {
 
           <h3>{item.price}</h3>
 
-          <Button hoverColor="#0080C1" padding={'10px 37px'}>
-            <p> Показать телефон </p>
-            <span>8 905 ХХХ ХХ ХХ</span>
-          </Button>
+          <ShowNumberButton phoneNumber={item.phone}></ShowNumberButton>
 
           <Seller>
             <SellerImg />
