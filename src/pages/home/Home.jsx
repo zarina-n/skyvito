@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <Title>Объявления</Title>
-      <Adds />
+      <Adds count="8" />
     </div>
   )
 }

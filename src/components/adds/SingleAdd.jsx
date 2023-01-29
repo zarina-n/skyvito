@@ -1,12 +1,10 @@
-import { Add, Image, AddLink, Price, Details } from './Adds.styled'
+import { Add, Image, Name, Price, Details } from './Adds.styled'
 
 const SingleAdd = () => {
   return (
-    <Add>
+    <Add to="/add:id">
       <Image></Image>
-      <AddLink to="/add">
-        Ракетка для большого тенниса Triumph Pro ST...
-      </AddLink>
+      <Name to="/add:id">Ракетка для большого тенниса Triumph Pro ST...</Name>
       <Price>2 200 ₽</Price>
       <Details>Санкт Петербург</Details>
       <Details>Сегодня в 10:45</Details>

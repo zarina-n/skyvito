@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 export const AddsContainer = styled.div`
   display: flex;
@@ -9,12 +9,18 @@ export const AddsContainer = styled.div`
   column-gap: 26px;
   row-gap: 40px;
   margin: 43px auto;
+  cursor: pointer;
 `
 
-export const Add = styled.div`
+export const Add = styled(Link)`
   display: flex;
   flex-direction: column;
   width: 270px;
+  transition: transform 1s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 
 export const Image = styled.div`
@@ -25,7 +31,7 @@ export const Image = styled.div`
   border-radius: 5px;
 `
 
-export const AddLink = styled(NavLink)`
+export const Name = styled.p`
   font-size: 22px;
   line-height: 120%;
   color: #009ee4;
@@ -36,6 +42,7 @@ export const Price = styled.p`
   font-size: 22px;
   line-height: 150%;
   margin: 0 0 10px 0;
+  color: #000;
 `
 
 export const Details = styled.p`
