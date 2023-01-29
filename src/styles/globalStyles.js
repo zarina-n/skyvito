@@ -3,10 +3,11 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle`
   body {
     margin: 0 auto;
-    background: #F1F1F1;
+    background:${({ theme }) => theme.colors.white};
     font-family: 'Roboto', sans-serif;
     font-style: normal;
     font-weight: 500;
+    
   }
   
   a, 

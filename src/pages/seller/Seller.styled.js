@@ -11,7 +11,7 @@ export const Heading = styled.h2`
   font-weight: 500;
   font-size: 32px;
   line-height: 220%;
-  color: #000000;
+  color: ${({ theme }) => theme.colors.black};
 
   margin: 0 0 20px 0;
 `
@@ -38,7 +38,7 @@ export const About = styled.div`
       font-size: 16px;
       line-height: 140%;
       text-align: center;
-      color: #ffffff;
+      color: ${({ theme }) => theme.colors.white};
       max-width: 241px;
 
       margin: 0 0 4px 0;
@@ -57,7 +57,7 @@ export const Details = styled.p`
   font-weight: 400;
   font-size: 16px;
   line-height: 200%;
-  color: #5f5f5f;
+  color: ${({ theme }) => theme.colors.graniteGray};
 
   margin: 0 0 4px 0;
 `

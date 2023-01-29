@@ -26,7 +26,7 @@ export const Add = styled(Link)`
 export const Image = styled.div`
   height: 270px;
   width: 270px;
-  background-color: lightgrey;
+  background-color: ${({ theme }) => theme.colors.imgBackGround};
   margin: 0 0 20px 0;
   border-radius: 5px;
 `
@@ -38,7 +38,7 @@ export const Name = styled.p`
   text-overflow: ellipsis;
   font-size: 22px;
   line-height: 120%;
-  color: #009ee4;
+  color: ${({ theme }) => theme.colors.primaryBlue};
   margin: 0 0 10px 0;
 `
 
@@ -46,12 +46,12 @@ export const Price = styled.p`
   font-size: 22px;
   line-height: 150%;
   margin: 0 0 10px 0;
-  color: #000;
+  color: ${({ theme }) => theme.colors.black};
 `
 
 export const Details = styled.p`
   font-size: 16px;
   line-height: 130%;
-  color: #5f5f5f;
+  color: ${({ theme }) => theme.colors.graniteGray};
   margin: 0 0 4px 0;
 `
