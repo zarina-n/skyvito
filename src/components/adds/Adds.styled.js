@@ -32,6 +32,10 @@ export const Image = styled.div`
 `
 
 export const Name = styled.p`
+  height: 52px;
+  overflow: hidden;
+  /* white-space: nowrap; */
+  text-overflow: ellipsis;
   font-size: 22px;
   line-height: 120%;
   color: #009ee4;

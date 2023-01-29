@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
   a:visited{
     text-decoration: none;    
     cursor: pointer;
-    color: #ffffff;
+    /* color: #ffffff; */
   }
 
   button{

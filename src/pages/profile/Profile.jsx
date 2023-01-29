@@ -9,6 +9,8 @@ const person = {
   phone: 89161234567,
 }
 
+const userAdds = true
+
 const Profile = () => {
   return (
     <>
@@ -16,7 +18,11 @@ const Profile = () => {
       <Heading>Настройки профиля</Heading>
       <ProfileForm person={person} />
       <Heading>Мои товары</Heading>
-      <Adds count="4" />
+      {userAdds ? (
+        <Adds count="4" />
+      ) : (
+        <Heading>Пока ваших объявлений нет</Heading>
+      )}
     </>
   )
 }
