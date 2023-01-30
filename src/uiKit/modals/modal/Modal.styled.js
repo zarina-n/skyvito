@@ -6,8 +6,8 @@ export const ModalContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
 `
 
 export const Content = styled.div`
@@ -15,10 +15,10 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
-  width: 50%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 1000;
 `
 
 export const CloseButton = styled.div`

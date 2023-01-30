@@ -8,14 +8,14 @@ import Login from '../uiKit/modals/auth/Login'
 import SignUp from '../uiKit/modals/auth/SignUp'
 
 const RouteLayout = () => {
-  const [open, setOpen] = useState(false)
-  const user = false
+  const [isOpen, setIsOpen] = useState(false)
+  const user = true
   const isRegister = true
 
   return (
     <div>
       <Header>
-        <Modal open={open} onClose={() => setOpen(false)}>
+        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           {isRegister ? <Login /> : <SignUp />}
         </Modal>
         {user ? (
@@ -28,7 +28,7 @@ const RouteLayout = () => {
           </Nav>
         ) : (
           <Nav>
-            <HeaderButton onClick={() => setOpen(true)}>
+            <HeaderButton onClick={() => setIsOpen(true)}>
               Вход в личный кабинет
             </HeaderButton>
           </Nav>

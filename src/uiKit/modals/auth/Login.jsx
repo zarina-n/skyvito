@@ -7,12 +7,10 @@ import { useState } from 'react'
 import SignUp from './SignUp'
 
 const Login = () => {
-  const [open, setOpen] = useState(false)
-
   return (
     <>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        : <SignUp />
+      <Modal>
+        <SignUp />
       </Modal>
       <Form>
         <LogoContainer>
@@ -25,9 +23,7 @@ const Login = () => {
         <Button type="submit" margin="60px 0 20px 0" width="278px">
           Войти
         </Button>
-        <WhiteSignUpButton onClick={() => setOpen(true)}>
-          Зарегистрироваться
-        </WhiteSignUpButton>
+        <WhiteSignUpButton>Зарегистрироваться</WhiteSignUpButton>
       </Form>
     </>
   )

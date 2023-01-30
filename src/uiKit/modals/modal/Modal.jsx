@@ -1,14 +1,20 @@
 import { ModalContainer, Content, CloseButton } from './Modal.styled'
 import Cross from '../../icons/Cross'
+import ReactDOM from 'react-dom'
 
 const Modal = ({ children, open, onClose }) => {
-  return (
-    <ModalContainer open={open}>
+  if (!open) return null
+
+  return ReactDOM.createPortal(
+    <>
+      <ModalContainer>
+        <CloseButton onClick={onClose}>
+          <Cross />
+        </CloseButton>
+      </ModalContainer>
       <Content>{children}</Content>
-      <CloseButton onClick={onClose}>
-        <Cross />
-      </CloseButton>
-    </ModalContainer>
+    </>,
+    document.getElementById('portal')
   )
 }
 

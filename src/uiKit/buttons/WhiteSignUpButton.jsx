@@ -1,7 +1,11 @@
 import { WhiteButton } from './Button.styled'
 
-const WhiteSignUpButton = ({ children }) => {
-  return <WhiteButton type="button">{children}</WhiteButton>
+const WhiteSignUpButton = ({ children, onClick }) => {
+  return (
+    <WhiteButton type="button" onClick={onClick}>
+      {children}
+    </WhiteButton>
+  )
 }
 
 export default WhiteSignUpButton
