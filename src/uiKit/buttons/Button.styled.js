@@ -10,6 +10,7 @@ export const StyledButton = styled.button`
   padding: 13px 37px;
   margin: ${({ margin }) => margin};
   box-sizing: border-box;
+  width: ${({ width }) => width};
 
   color: ${({ theme }) => theme.colors.white};
 
@@ -36,5 +37,19 @@ export const StyledShowNumberButton = styled(StyledButton)`
     max-width: 241px;
 
     margin: 0 0 4px 0;
+  }
+`
+
+export const WhiteButton = styled(StyledButton)`
+  color: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.white};
+  border: ${({ theme }) => `1px solid ${theme.colors.lightSilver}`};
+  width: 278px;
+
+  /* margin-bottom: 47px; */
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightSilver};
+    color: ${({ theme }) => theme.colors.white};
   }
 `

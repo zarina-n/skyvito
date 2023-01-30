@@ -11,8 +11,10 @@ import {
   SellerLink,
 } from './AddAbout.styled'
 import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
+import Button from '../../uiKit/buttons/Button'
 
 const AddAbout = () => {
+  const user = false
   const item = {
     name: 'Ракетка для большого тенниса Triumph Pro STС Б/У',
     price: '2 200 ₽',
@@ -47,7 +49,14 @@ const AddAbout = () => {
 
           <h3>{item.price}</h3>
 
-          <ShowNumberButton phoneNumber={item.phone}></ShowNumberButton>
+          {user ? (
+            <>
+              <Button margin={'0 10px 10px 0'}>Редактировать</Button>
+              <Button>Снять с публикации</Button>
+            </>
+          ) : (
+            <ShowNumberButton phoneNumber={item.phone}></ShowNumberButton>
+          )}
 
           <Seller>
             <SellerImg />
