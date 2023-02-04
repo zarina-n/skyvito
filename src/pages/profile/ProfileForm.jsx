@@ -1,5 +1,5 @@
 import { AccountForm, Image, Data, Label, Inputs } from './Profile.styled'
-import Input from '../../uiKit/input/Input'
+import Input from '../../uiKit/inputs/Input'
 import Button from '../../uiKit/buttons/Button'
 
 const ProfileForm = ({ person }) => {

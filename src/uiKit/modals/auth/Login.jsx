@@ -1,4 +1,4 @@
-import Input from '../../input/Input'
+import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'

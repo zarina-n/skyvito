@@ -6,9 +6,11 @@ import HeaderButton from '../uiKit/buttons/HeaderButton'
 import Modal from '../uiKit/modals/modal/Modal'
 import Login from '../uiKit/modals/auth/Login'
 import SignUp from '../uiKit/modals/auth/SignUp'
+import NewAdd from '../uiKit/modals/addEditAdd/NewAdd'
 
 const RouteLayout = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isNewAddOpen, setIsNewAddOpen] = useState(false)
   const user = true
   const isRegister = true
 
@@ -18,9 +20,18 @@ const RouteLayout = () => {
         <Modal open={isOpen} onClose={() => setIsOpen(false)}>
           {isRegister ? <Login /> : <SignUp />}
         </Modal>
+
+        <Modal open={isNewAddOpen} onClose={() => setIsNewAddOpen(false)}>
+          <NewAdd />
+        </Modal>
         {user ? (
           <Nav>
-            <HeaderButton margin={'0 10px'}>Разместить объявление</HeaderButton>
+            <HeaderButton
+              margin={'0 10px'}
+              onClick={() => setIsNewAddOpen(true)}
+            >
+              Разместить объявление
+            </HeaderButton>
 
             <Link to="profile">
               <HeaderButton>Личный кабинет</HeaderButton>

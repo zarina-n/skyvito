@@ -12,9 +12,17 @@ import {
 } from './AddAbout.styled'
 import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import Button from '../../uiKit/buttons/Button'
+import Modal from '../../uiKit/modals/modal/Modal'
+import { useState } from 'react'
+import Reviews from '../../uiKit/modals/reviews/Reviews'
+import EditAdd from '../../uiKit/modals/addEditAdd/EditAdd'
 
 const AddAbout = () => {
-  const user = false
+  const [isReviewOpen, setIsReviewOpen] = useState(false)
+  const [isEditAddOpen, setIsEditAddOpen] = useState(false)
+
+  const user = true
+
   const item = {
     name: 'Ракетка для большого тенниса Triumph Pro STС Б/У',
     price: '2 200 ₽',
@@ -26,8 +34,16 @@ const AddAbout = () => {
     sellerName: 'Кирилл',
     sellerOnSiteSince: 'Продает товары с августа 2021',
   }
+
   return (
     <>
+      <Modal open={isReviewOpen} onClose={() => setIsReviewOpen(false)}>
+        <Reviews />
+      </Modal>
+
+      <Modal open={isEditAddOpen} onClose={() => setIsEditAddOpen(false)}>
+        <EditAdd />
+      </Modal>
       <AddDetails>
         <Images>
           <MainImg></MainImg>
@@ -44,14 +60,19 @@ const AddAbout = () => {
           <ItemInfo>
             <Text>Сегодня в 10:45</Text>
             <Text>Санкт-Петербург</Text>
-            <span>23 отзыва</span>
+            <span onClick={() => setIsReviewOpen(true)}>23 отзыва</span>
           </ItemInfo>
 
           <h3>{item.price}</h3>
 
           {user ? (
             <>
-              <Button margin={'0 10px 10px 0'}>Редактировать</Button>
+              <Button
+                margin={'0 10px 10px 0'}
+                onClick={() => setIsEditAddOpen(true)}
+              >
+                Редактировать
+              </Button>
               <Button>Снять с публикации</Button>
             </>
           ) : (

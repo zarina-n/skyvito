@@ -2,7 +2,7 @@ import { SearchContainer, LogoDiv } from './Search.styled'
 import { Link, useLocation } from 'react-router-dom'
 import Button from '../../uiKit/buttons/Button'
 import Logo from '../../uiKit/icons/Logo'
-import Input from '../../uiKit/input/Input'
+import Input from '../../uiKit/inputs/Input'
 
 const Search = () => {
   const location = useLocation()
