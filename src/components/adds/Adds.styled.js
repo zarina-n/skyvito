@@ -23,7 +23,7 @@ export const Add = styled(Link)`
   }
 `
 
-export const Image = styled.div`
+export const Image = styled.img`
   height: 270px;
   width: 270px;
   background-color: ${({ theme }) => theme.colors.imgBackGround};
