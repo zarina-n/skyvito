@@ -84,7 +84,7 @@ const AddAbout = () => {
         <Details>
           <h1>{add?.title}</h1>
           <ItemInfo>
-            <Text>Сегодня в 10:45</Text>
+            <Text>{add?.created_on}</Text>
             <Text>Санкт-Петербург</Text>
             <span onClick={() => setIsReviewOpen(true)}>
               {getReviewsLength(currentReviews?.length)}

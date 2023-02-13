@@ -19,12 +19,8 @@ const Seller = () => {
 
   const { id } = useParams()
 
-  const sellerInfo = users.filter((user) => id === user.id)
-
-  console.log(users.map((user) => console.log(user.id)))
-  console.log(id)
-
-  const sellerAdds = allAdds.filter((add) => add.user.id === sellerInfo.id)
+  const seller = users.filter((user) => Number(user.id) === Number(id))
+  const sellerAdds = allAdds.filter((add) => Number(add.user_id) === Number(id))
 
   return (
     <>
@@ -32,17 +28,17 @@ const Seller = () => {
       <SellerInfo>
         <Image
           src={
-            sellerInfo.avatar
-              ? `${BASE_URL}${sellerInfo.avatar}`
+            seller[0].avatar
+              ? `${BASE_URL}${seller[0].avatar}`
               : '/img/no_picture.png'
           }
         />
         <About>
-          <Name>{`${sellerInfo.name} ${sellerInfo.surname}`}</Name>
-          <Details>{sellerInfo.city}</Details>
-          <Details>{`Продает товары с ${sellerInfo.sells_from}`}</Details>
+          <Name>{`${seller[0].name} ${seller[0].surname}`}</Name>
+          <Details>{seller[0].city}</Details>
+          <Details>{`Продает товары с ${seller[0].sells_from}`}</Details>
 
-          <ShowNumberButton phoneNumber={sellerInfo.phone}></ShowNumberButton>
+          <ShowNumberButton phoneNumber={seller[0].phone}></ShowNumberButton>
         </About>
       </SellerInfo>
 

@@ -4,7 +4,7 @@ import createdOn from './utils'
 import { useDispatch } from 'react-redux'
 import { getCurrentAdd } from '../../features/adds/addsSlice'
 
-const SingleAdd = (add) => {
+const SingleAdd = ({ add }) => {
   const dispatch = useDispatch()
 
   const imgUrl = `${BASE_URL}${add.images[0]?.url}`
@@ -17,10 +17,10 @@ const SingleAdd = (add) => {
           alt={add.name}
         />
       </Image>
-      <Name title={add.name}>{add.name}</Name>
+      <Name>{add.name}</Name>
       <Price>{`${add.price} ₽`}</Price>
-      <Details>{add.city}</Details>
-      <Details>{createdOn(add.time)}</Details>
+      <Details>{add.user.city}</Details>
+      <Details>{createdOn(add.created_on)}</Details>
     </Add>
   )
 }

@@ -97,6 +97,7 @@ export const SellerImg = styled.img`
 `
 
 export const AddDescription = styled.div`
+  margin-bottom: 100px;
   h2 {
     font-weight: 500;
     font-size: 32px;
