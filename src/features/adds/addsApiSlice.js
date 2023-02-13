@@ -5,10 +5,14 @@ export const addsApiSlice = apiSlice.injectEndpoints({
     getAllAdds: builder.query({
       query: () => 'ads',
     }),
-    getMainImg: builder.query({
-      query: (id) => `images/${id}`,
+    getAddById: builder.query({
+      query: (id) => `ads/${id}`,
+    }),
+    getUsers: builder.query({
+      query: () => 'user/all',
     }),
   }),
 })
 
-export const { useGetAllAddsQuery, useGetMainImgQuery } = addsApiSlice
+export const { useGetAllAddsQuery, useGetAddByIdQuery, useGetUsersQuery } =
+  addsApiSlice

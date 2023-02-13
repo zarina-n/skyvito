@@ -23,7 +23,7 @@ export const SellerInfo = styled.div`
   margin-bottom: 44px;
 `
 
-export const Image = styled.div`
+export const Image = styled.img`
   width: 170px;
   height: 170px;
   border-radius: 50%;

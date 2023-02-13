@@ -9,30 +9,45 @@ import {
   Name,
   Details,
 } from './Seller.styled'
+import { useSelector } from 'react-redux'
+import { BASE_URL } from '../../features/api/apiSlice'
+import { useParams } from 'react-router-dom'
 
 const Seller = () => {
-  const seller = {
-    sellerName: 'Кирилл Матвеев',
-    city: 'Санкт-Петербург',
-    sellerOnSiteSince: 'Продает товары с августа 2021',
-    phone: '89051234567',
-  }
+  const users = useSelector((state) => state.adds?.users)
+  const allAdds = useSelector((state) => state.adds?.allAdds)
+
+  const { id } = useParams()
+
+  const sellerInfo = users.filter((user) => id === user.id)
+
+  console.log(users.map((user) => console.log(user.id)))
+  console.log(id)
+
+  const sellerAdds = allAdds.filter((add) => add.user.id === sellerInfo.id)
+
   return (
     <>
       <Title>Профиль продавца</Title>
       <SellerInfo>
-        <Image></Image>
+        <Image
+          src={
+            sellerInfo.avatar
+              ? `${BASE_URL}${sellerInfo.avatar}`
+              : '/img/no_picture.png'
+          }
+        />
         <About>
-          <Name>{seller.sellerName}</Name>
-          <Details>{seller.city}</Details>
-          <Details>{seller.sellerOnSiteSince}</Details>
+          <Name>{`${sellerInfo.name} ${sellerInfo.surname}`}</Name>
+          <Details>{sellerInfo.city}</Details>
+          <Details>{`Продает товары с ${sellerInfo.sells_from}`}</Details>
 
-          <ShowNumberButton phoneNumber={seller.phone}></ShowNumberButton>
+          <ShowNumberButton phoneNumber={sellerInfo.phone}></ShowNumberButton>
         </About>
       </SellerInfo>
 
       <Heading>Товары продавца</Heading>
-      <Adds count="4" />
+      <Adds adds={sellerAdds} />
     </>
   )
 }

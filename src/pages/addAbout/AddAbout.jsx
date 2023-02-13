@@ -13,32 +13,58 @@ import {
 import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import Button from '../../uiKit/buttons/Button'
 import Modal from '../../uiKit/modals/modal/Modal'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import Reviews from '../../uiKit/modals/reviews/Reviews'
 import EditAdd from '../../uiKit/modals/addEditAdd/EditAdd'
+import { useDispatch, useSelector } from 'react-redux'
+import { BASE_URL } from '../../features/api/apiSlice'
+import { useGetReviewByIdQuery } from '../../features/reviews/reviewApiSlice'
+import { getCurrentReview } from '../../features/reviews/reviewSlice'
+import { getReviewsLength } from './utils'
 
 const AddAbout = () => {
+  const { id } = useParams()
+  const dispatch = useDispatch()
+
+  const add = useSelector((state) => state.adds?.currentAdd)
+  const currentReviews = useSelector((state) => state.reviews?.currentReview)
+
+  // console.log(add)
+
   const [isReviewOpen, setIsReviewOpen] = useState(false)
   const [isEditAddOpen, setIsEditAddOpen] = useState(false)
 
-  const user = true
+  const user = false
 
-  const item = {
-    name: 'Ракетка для большого тенниса Triumph Pro STС Б/У',
-    price: '2 200 ₽',
-    city: 'Санкт Петербург',
-    timeStamp: 'Сегодня в 10:45',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    phone: '89051234567',
-    sellerName: 'Кирилл',
-    sellerOnSiteSince: 'Продает товары с августа 2021',
+  const {
+    data: reviews,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useGetReviewByIdQuery(id)
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(getCurrentReview(reviews))
+    }
+  }, [dispatch, isSuccess, reviews])
+
+  let reviewsContent
+
+  if (isLoading) {
+    reviewsContent = <p>Loading</p>
+  } else if (isSuccess) {
+    reviewsContent = reviews
+  } else if (isError) {
+    reviewsContent = <p>{error}</p>
   }
 
   return (
     <>
       <Modal open={isReviewOpen} onClose={() => setIsReviewOpen(false)}>
-        <Reviews />
+        <Reviews reviews={reviewsContent} />
       </Modal>
 
       <Modal open={isEditAddOpen} onClose={() => setIsEditAddOpen(false)}>
@@ -56,14 +82,16 @@ const AddAbout = () => {
           </div>
         </Images>
         <Details>
-          <h1>{item.name}</h1>
+          <h1>{add?.title}</h1>
           <ItemInfo>
             <Text>Сегодня в 10:45</Text>
             <Text>Санкт-Петербург</Text>
-            <span onClick={() => setIsReviewOpen(true)}>23 отзыва</span>
+            <span onClick={() => setIsReviewOpen(true)}>
+              {getReviewsLength(currentReviews?.length)}
+            </span>
           </ItemInfo>
 
-          <h3>{item.price}</h3>
+          <h3>{`${add?.price} ₽`}</h3>
 
           {user ? (
             <>
@@ -76,14 +104,19 @@ const AddAbout = () => {
               <Button>Снять с публикации</Button>
             </>
           ) : (
-            <ShowNumberButton phoneNumber={item.phone}></ShowNumberButton>
+            <ShowNumberButton phoneNumber={add?.user.phone}></ShowNumberButton>
           )}
 
           <Seller>
-            <SellerImg />
+            <SellerImg
+              src={`${BASE_URL}${add?.user.avatar}`}
+              alt="seller avatar"
+            />
             <div>
-              <SellerLink to={'/seller'}>{item.sellerName}</SellerLink>
-              <Text>{item.sellerOnSiteSince}</Text>
+              <SellerLink to={`/seller/${add?.user.id}`}>
+                {add?.user.name}
+              </SellerLink>
+              <Text>{add?.created_on}</Text>
             </div>
           </Seller>
         </Details>
@@ -91,7 +124,7 @@ const AddAbout = () => {
 
       <AddDescription>
         <h2>Описание товара</h2>
-        <p>{item.description}</p>
+        <p>{add?.description}</p>
       </AddDescription>
     </>
   )

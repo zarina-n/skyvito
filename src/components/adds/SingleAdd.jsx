@@ -1,22 +1,26 @@
 import { Add, Image, Name, Price, Details } from './Adds.styled'
 import { BASE_URL } from '../../features/api/apiSlice'
 import createdOn from './utils'
+import { useDispatch } from 'react-redux'
+import { getCurrentAdd } from '../../features/adds/addsSlice'
 
-const SingleAdd = ({ id, name, price, city, time, images }) => {
-  const imgUrl = `${BASE_URL}${images[0]?.url}`
+const SingleAdd = (add) => {
+  const dispatch = useDispatch()
+
+  const imgUrl = `${BASE_URL}${add.images[0]?.url}`
 
   return (
-    <Add to={`/add/${id}`}>
+    <Add to={`/add/${add.id}`} onClick={() => dispatch(getCurrentAdd(add))}>
       <Image>
         <img
-          src={imgUrl.slice(-3) === 'png' ? imgUrl : '/img/no_picture.png'}
-          alt={name}
+          src={add.images?.length !== 0 ? imgUrl : '/img/no_picture.png'}
+          alt={add.name}
         />
       </Image>
-      <Name title={name}>{name}</Name>
-      <Price>{`${price} ₽`}</Price>
-      <Details>{city}</Details>
-      <Details>{createdOn(time)}</Details>
+      <Name title={add.name}>{add.name}</Name>
+      <Price>{`${add.price} ₽`}</Price>
+      <Details>{add.city}</Details>
+      <Details>{createdOn(add.time)}</Details>
     </Add>
   )
 }

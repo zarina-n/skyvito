@@ -11,7 +11,7 @@ import NewAdd from '../uiKit/modals/addEditAdd/NewAdd'
 const RouteLayout = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isNewAddOpen, setIsNewAddOpen] = useState(false)
-  const user = true
+  const user = false
   const isRegister = true
 
   return (

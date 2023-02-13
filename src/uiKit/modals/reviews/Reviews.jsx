@@ -2,17 +2,22 @@ import Review from './Review'
 import AddReview from './AddReview'
 import { StyledReview, Title } from './Reviews.styled'
 
-const Reviews = () => {
-  const content = Array.from({ length: 5 }).map((item, i) => (
-    <Review key={i} id={i + 1} />
-  ))
+const Reviews = ({ reviews }) => {
+  const content = reviews.map((review) => {
+    return <Review key={review.id} id={review.id} review={review} />
+  })
+
+  console.log(content)
+
+  const user = false
   return (
     <StyledReview>
       <Title>Отзывы о товаре</Title>
 
-      <AddReview />
+      {user && <AddReview />}
 
       {content}
+      {content.length === 0 && <p>Пока отзывов нет</p>}
     </StyledReview>
   )
 }

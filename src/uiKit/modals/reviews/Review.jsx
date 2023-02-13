@@ -5,23 +5,22 @@ import {
   NameDate,
   ReviewContent,
 } from './Reviews.styled'
+import { useSelector } from 'react-redux'
+import { BASE_URL } from '../../../features/api/apiSlice'
 
-const review = {
-  name: 'Олег',
-  text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  date: '14 августа',
-}
+const Review = ({ review }) => {
+  const users = useSelector((state) => state.adds?.users)
+  const user = users.filter((user) => user.id === review.author_id)
 
-const Review = () => {
   return (
     <ReviewContainer>
       <div>
-        <Image />
+        <Image src={`${BASE_URL}${user[0].avatar}`} />
       </div>
       <Details>
         <NameDate>
-          <p>{review.name}</p>
-          <span>{review.date}</span>
+          <p>{user[0].name}</p>
+          <span>{review.created_on}</span>
         </NameDate>
 
         <ReviewContent>

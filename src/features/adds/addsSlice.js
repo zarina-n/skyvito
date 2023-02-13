@@ -1,19 +1,32 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  adds: null,
+  allAdds: null,
+  currentAdd: null,
+  search: null,
+  users: null,
 }
 
 const addsSlice = createSlice({
   name: 'adds',
   initialState: initialState,
   reducers: {
-    getAdds: (state, action) => {
-      state.adds = action.payload
+    getAllAdds: (state, action) => {
+      state.allAdds = action.payload
+    },
+    getCurrentAdd: (state, action) => {
+      state.currentAdd = action.payload
+    },
+    getSearchValue: (state, action) => {
+      state.search = action.payload
+    },
+    getUsers: (state, action) => {
+      state.users = action.payload
     },
   },
 })
 
-export const { getAdds } = addsSlice.actions
+export const { getAllAdds, getCurrentAdd, getSearchValue, getUsers } =
+  addsSlice.actions
 
 export default addsSlice.reducer
