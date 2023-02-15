@@ -13,63 +13,41 @@ import {
 import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import Button from '../../uiKit/buttons/Button'
 import Modal from '../../uiKit/modals/modal/Modal'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import Reviews from '../../uiKit/modals/reviews/Reviews'
-import EditAdd from '../../uiKit/modals/addEditAdd/EditAdd'
 import { useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../features/api/apiSlice'
 import { useGetReviewByIdQuery } from '../../features/reviews/reviewApiSlice'
-import { getCurrentReview } from '../../features/reviews/reviewSlice'
+import { getReviews } from '../../features/reviews/reviewSlice'
 import { getReviewsLength } from './utils'
+import createdOn from '../../components/adds/utils'
+import { getModal, isModalOpen } from '../../features/modal/modalSlice'
 
 const AddAbout = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
 
   const add = useSelector((state) => state.adds?.currentAdd)
-  const currentReviews = useSelector((state) => state.reviews?.currentReview)
+  const currentReviews = useSelector((state) => state.reviews?.reviews)
+  const isLoginOpen = useSelector((state) => state.modal.isOpen)
+  const modalName = useSelector((state) => state.modal.modal)
 
-  // console.log(add)
+  const user = true
 
-  const [isReviewOpen, setIsReviewOpen] = useState(false)
-  const [isEditAddOpen, setIsEditAddOpen] = useState(false)
-
-  const user = false
-
-  const {
-    data: reviews,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetReviewByIdQuery(id)
+  const { data: reviews, isSuccess, isError, error } = useGetReviewByIdQuery(id)
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(getCurrentReview(reviews))
+      dispatch(getReviews(reviews))
+    } else if (isError) {
+      console.log(error)
     }
-  }, [dispatch, isSuccess, reviews])
-
-  let reviewsContent
-
-  if (isLoading) {
-    reviewsContent = <p>Loading</p>
-  } else if (isSuccess) {
-    reviewsContent = reviews
-  } else if (isError) {
-    reviewsContent = <p>{error}</p>
-  }
+  }, [dispatch, isSuccess, reviews, isError, error])
 
   return (
     <>
-      <Modal open={isReviewOpen} onClose={() => setIsReviewOpen(false)}>
-        <Reviews reviews={reviewsContent} />
-      </Modal>
+      {isLoginOpen && <Modal modal={modalName} />}
 
-      <Modal open={isEditAddOpen} onClose={() => setIsEditAddOpen(false)}>
-        <EditAdd />
-      </Modal>
       <AddDetails>
         <Images>
           <MainImg></MainImg>
@@ -84,9 +62,14 @@ const AddAbout = () => {
         <Details>
           <h1>{add?.title}</h1>
           <ItemInfo>
-            <Text>{add?.created_on}</Text>
-            <Text>Санкт-Петербург</Text>
-            <span onClick={() => setIsReviewOpen(true)}>
+            <Text>{createdOn(add?.created_on)}</Text>
+            <Text>{add?.user.city}</Text>
+            <span
+              onClick={() => {
+                dispatch(isModalOpen(true))
+                dispatch(getModal('reviews'))
+              }}
+            >
               {getReviewsLength(currentReviews?.length)}
             </span>
           </ItemInfo>
@@ -97,7 +80,10 @@ const AddAbout = () => {
             <>
               <Button
                 margin={'0 10px 10px 0'}
-                onClick={() => setIsEditAddOpen(true)}
+                onClick={() => {
+                  dispatch(isModalOpen(true))
+                  dispatch(getModal('edit-add'))
+                }}
               >
                 Редактировать
               </Button>
@@ -116,7 +102,7 @@ const AddAbout = () => {
               <SellerLink to={`/seller/${add?.user.id}`}>
                 {add?.user.name}
               </SellerLink>
-              <Text>{add?.created_on}</Text>
+              <Text>{`Продает товары с ${createdOn(add?.created_on)}`}</Text>
             </div>
           </Seller>
         </Details>

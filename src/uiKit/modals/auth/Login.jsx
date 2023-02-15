@@ -2,16 +2,15 @@ import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
-import Modal from '../modal/Modal'
-import { useState } from 'react'
-import SignUp from './SignUp'
+
+import { getModal } from '../../../features/modal/modalSlice'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
+  const dispatch = useDispatch()
+
   return (
     <>
-      <Modal>
-        <SignUp />
-      </Modal>
       <Form>
         <LogoContainer>
           <Logo src="/img/AuthLogo.png" />
@@ -23,7 +22,13 @@ const Login = () => {
         <Button type="submit" margin="60px 0 20px 0" width="278px">
           Войти
         </Button>
-        <WhiteSignUpButton>Зарегистрироваться</WhiteSignUpButton>
+        <WhiteSignUpButton
+          onClick={() => {
+            dispatch(getModal('sign-up'))
+          }}
+        >
+          Зарегистрироваться
+        </WhiteSignUpButton>
       </Form>
     </>
   )

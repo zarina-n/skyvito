@@ -1,34 +1,31 @@
 import { Link, Outlet } from 'react-router-dom'
 import { Header, Nav, Main } from './RouteLayout.styled'
-import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getModal, isModalOpen } from '../features/modal/modalSlice'
 import Search from '../components/search/Search'
 import HeaderButton from '../uiKit/buttons/HeaderButton'
 import Modal from '../uiKit/modals/modal/Modal'
-import Login from '../uiKit/modals/auth/Login'
-import SignUp from '../uiKit/modals/auth/SignUp'
-import NewAdd from '../uiKit/modals/addEditAdd/NewAdd'
 
 const RouteLayout = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isNewAddOpen, setIsNewAddOpen] = useState(false)
+  const dispatch = useDispatch()
   const user = false
-  const isRegister = true
+
+  const isLoginOpen = useSelector((state) => state.modal.isOpen)
+  const modalName = useSelector((state) => state.modal.modal)
 
   return (
     <div>
       <Header>
-        <Modal open={isOpen} onClose={() => setIsOpen(false)}>
-          {isRegister ? <Login /> : <SignUp />}
-        </Modal>
+        {isLoginOpen && <Modal modal={modalName}></Modal>}
 
-        <Modal open={isNewAddOpen} onClose={() => setIsNewAddOpen(false)}>
-          <NewAdd />
-        </Modal>
         {user ? (
           <Nav>
             <HeaderButton
               margin={'0 10px'}
-              onClick={() => setIsNewAddOpen(true)}
+              onClick={() => {
+                dispatch(isModalOpen(true))
+                dispatch(getModal('new-add'))
+              }}
             >
               Разместить объявление
             </HeaderButton>
@@ -39,7 +36,12 @@ const RouteLayout = () => {
           </Nav>
         ) : (
           <Nav>
-            <HeaderButton onClick={() => setIsOpen(true)}>
+            <HeaderButton
+              onClick={() => {
+                dispatch(isModalOpen(true))
+                dispatch(getModal('login'))
+              }}
+            >
               Вход в личный кабинет
             </HeaderButton>
           </Nav>
