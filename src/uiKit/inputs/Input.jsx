@@ -20,7 +20,7 @@ const Input = ({
       value={value}
       width={width}
       placeholderColor={placeholderColor}
-      onClick={onChange}
+      onClick={onClick}
       onChange={onChange}
     />
   )

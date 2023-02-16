@@ -2,13 +2,14 @@ import { Link, Outlet } from 'react-router-dom'
 import { Header, Nav, Main } from './RouteLayout.styled'
 import { useDispatch, useSelector } from 'react-redux'
 import { getModal, isModalOpen } from '../features/modal/modalSlice'
+
 import Search from '../components/search/Search'
 import HeaderButton from '../uiKit/buttons/HeaderButton'
 import Modal from '../uiKit/modals/modal/Modal'
 
 const RouteLayout = () => {
   const dispatch = useDispatch()
-  const user = false
+  const user = useSelector((state) => state.auth?.user)
 
   const isLoginOpen = useSelector((state) => state.modal.isOpen)
   const modalName = useSelector((state) => state.modal.modal)

@@ -46,10 +46,8 @@ export const WhiteButton = styled(StyledButton)`
   border: ${({ theme }) => `1px solid ${theme.colors.lightSilver}`};
   width: 278px;
 
-  /* margin-bottom: 47px; */
-
   &:hover {
-    background-color: ${({ theme }) => theme.colors.lightSilver};
+    background-color: ${({ theme }) => theme.colors.hoverBlue};
     color: ${({ theme }) => theme.colors.white};
   }
 `
