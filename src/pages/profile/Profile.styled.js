@@ -24,7 +24,8 @@ export const AccountForm = styled.form`
 export const Image = styled.div`
   text-align: center;
   max-width: 170px;
-  div {
+
+  img {
     width: 170px;
     height: 170px;
     border-radius: 50%;

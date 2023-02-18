@@ -6,7 +6,10 @@ const ProfileForm = ({ person }) => {
   return (
     <AccountForm onSubmit={(event) => event.preventDefault()}>
       <Image>
-        <div></div>
+        <img
+          src={person.avatar !== null ? person.avatar : '/img/no_picture.png'}
+          alt="avatar"
+        />
         <p>Заменить</p>
       </Image>
       <Data>
@@ -14,7 +17,7 @@ const ProfileForm = ({ person }) => {
           <div>
             <Label htmlFor="name">Имя</Label>
             <Input
-              placeholder={person.name}
+              placeholder={person?.name}
               name="name"
               id="name"
               type="text"
@@ -26,7 +29,7 @@ const ProfileForm = ({ person }) => {
           <div>
             <Label htmlFor="surname">Фамилия</Label>
             <Input
-              placeholder={person.surname}
+              placeholder={person?.surname}
               name="surname"
               type="text"
               id="surname"
@@ -38,7 +41,7 @@ const ProfileForm = ({ person }) => {
           <div>
             <Label htmlFor="city">Город</Label>
             <Input
-              placeholder={person.city}
+              placeholder={person?.city}
               name="city"
               type="text"
               id="city"
@@ -50,7 +53,7 @@ const ProfileForm = ({ person }) => {
           <div>
             <Label htmlFor="phone">Телефон</Label>
             <Input
-              placeholder={person.phone}
+              placeholder={person?.phone}
               name="phone"
               type="text"
               id="phone"

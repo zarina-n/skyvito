@@ -35,10 +35,7 @@ const SignUp = () => {
 
     try {
       if (isValid) {
-        const userData = await signUp({ ...user }).unwrap()
-
-        // console.log(user)
-        // console.log(userData)
+        await signUp({ ...user }).unwrap()
 
         setPasswordError(null)
         setUser('')
@@ -150,11 +147,3 @@ const SignUp = () => {
 }
 
 export default SignUp
-
-// city: "Boston"
-// email: "email@email.com"
-// name: "zarina"
-// password: "qwertyqwerty"
-// phone: ""
-// role: "user"
-// surname:"n"

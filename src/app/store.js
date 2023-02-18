@@ -4,6 +4,7 @@ import authReducer from '../features/auth/authSlice'
 import addsReducer from '../features/adds/addsSlice'
 import reviewReducer from '../features/reviews/reviewSlice'
 import modalReducer from '../features/modal/modalSlice'
+import usersReducer from '../features/users/usersSlice'
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     adds: addsReducer,
     reviews: reviewReducer,
     modal: modalReducer,
+    users: usersReducer,
   },
 
   middleware: (getDefaultMiddleware) =>

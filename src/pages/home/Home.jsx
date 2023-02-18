@@ -1,9 +1,7 @@
 import Adds from '../../components/adds/Adds'
 import { Title } from './Home.styled'
-import {
-  useGetAllAddsQuery,
-  useGetUsersQuery,
-} from '../../features/adds/addsApiSlice'
+import { useGetAllAddsQuery } from '../../features/adds/addsApiSlice'
+import { useGetUsersQuery } from '../../features/users/usersApiSlice'
 import { getAllAdds, getUsers } from '../../features/adds/addsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'

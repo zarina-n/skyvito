@@ -45,7 +45,6 @@ const Login = () => {
         password,
       }).unwrap()
 
-      // console.log(tokens)
       dispatch(setAccessToken(tokens.access_token))
       dispatch(setRefreshToken(tokens.refresh_token))
 
@@ -79,7 +78,7 @@ const Login = () => {
 
         {errorMessage && <p>{errorMessage}</p>}
         <Button type="submit" margin="60px 0 20px 0" width="278px">
-          Войти
+          {isLoading ? 'Loading' : ' Войти'}
         </Button>
         <WhiteSignUpButton
           onClick={() => {

@@ -8,18 +8,11 @@ export const addsApiSlice = apiSlice.injectEndpoints({
     getAddById: builder.query({
       query: (id) => `ads/${id}`,
     }),
-    getUsers: builder.query({
-      query: () => 'user/all',
-    }),
-    getUser: builder.query({
-      query: () => '/user',
+
+    getCurrentUserAdds: builder.query({
+      query: () => 'adds/me',
     }),
   }),
 })
 
-export const {
-  useGetAllAddsQuery,
-  useGetAddByIdQuery,
-  useGetUsersQuery,
-  useGetUserQuery,
-} = addsApiSlice
+export const { useGetAllAddsQuery, useGetAddByIdQuery } = addsApiSlice
