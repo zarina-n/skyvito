@@ -12,7 +12,8 @@ const Reviews = () => {
 
   console.log(content)
 
-  const user = false
+  const user = useSelector((state) => state.auth?.user)
+
   return (
     <StyledReview>
       <Title>Отзывы о товаре</Title>

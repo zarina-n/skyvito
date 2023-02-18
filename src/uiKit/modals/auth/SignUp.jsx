@@ -3,14 +3,15 @@ import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
 import { useState } from 'react'
-import uuid from 'react-uuid'
 
-import { getModal } from '../../../features/modal/modalSlice'
+import { getModal, isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
 import { useSignUserUpMutation } from '../../../features/auth/authApiSlice'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate
 
   const [user, setUser] = useState({
     password: '',
@@ -27,57 +28,29 @@ const SignUp = () => {
 
   const [signUp, { isLoading, isError }] = useSignUserUpMutation()
 
-  // const handleEmail = (event) => {
-  //   setUser({
-  //     ...user,
-  //     email: event.target.value,
-  //   })
-  // }
-
-  // const handlePassword = (event) => {
-  //   setUser({
-  //     ...user,
-  //     password: event.target.value,
-  //   })
-  // }
-
-  // const handleName = (event) => {
-  //   setUser({
-  //     ...user,
-  //     name: event.target.value,
-  //   })
-  // }
-
-  // const handleSurname = (event) => {
-  //   setUser({
-  //     ...user,
-  //     surname: event.target.value,
-  //   })
-  // }
-
-  // const handleCity = (event) => {
-  //   setUser({
-  //     ...user,
-  //     city: event.target.value,
-  //   })
-  // }
-
   const isValid = user.password === repeatPswd
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (isValid) {
-      console.log(user)
+    try {
+      if (isValid) {
+        const userData = await signUp({ ...user }).unwrap()
 
-      signUp(user)
-      setPasswordError(null)
-      setUser('')
-      setRepeatPswd('')
-      dispatch(getModal('login'))
-    } else {
-      console.log('Пароли не совпадают')
-      setPasswordError('Пароли не совпадают')
+        // console.log(user)
+        // console.log(userData)
+
+        setPasswordError(null)
+        setUser('')
+        setRepeatPswd('')
+        dispatch(isModalOpen(false))
+        navigate('/profile')
+      } else {
+        console.log('Пароли не совпадают')
+        setPasswordError('Пароли не совпадают')
+      }
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -101,6 +74,7 @@ const SignUp = () => {
       />
 
       <Input
+        type="password"
         onChange={(event) =>
           setUser({
             ...user,
@@ -114,6 +88,7 @@ const SignUp = () => {
       />
 
       <Input
+        type="password"
         onChange={(event) => setRepeatPswd(event.target.value)}
         placeholder={'Повторите пароль'}
         width="278px"

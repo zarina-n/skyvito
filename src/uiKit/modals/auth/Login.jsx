@@ -3,15 +3,21 @@ import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { getModal } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
 import { useLoginUserMutation } from '../../../features/auth/authApiSlice'
-import { setUser } from '../../../features/auth/authSlice'
+import {
+  setUser,
+  setAccessToken,
+  setRefreshToken,
+} from '../../../features/auth/authSlice'
 import { isModalOpen } from '../../../features/modal/modalSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -34,14 +40,19 @@ const Login = () => {
     event.preventDefault()
 
     try {
-      await login({
+      const tokens = await login({
         email,
         password,
       }).unwrap()
 
+      // console.log(tokens)
+      dispatch(setAccessToken(tokens.access_token))
+      dispatch(setRefreshToken(tokens.refresh_token))
+
       dispatch(setUser(true))
       setErrorMessage(null)
       dispatch(isModalOpen(false))
+      navigate('/profile')
     } catch (err) {
       setErrorMessage(err)
     }
@@ -60,6 +71,7 @@ const Login = () => {
           width="278px"
         />
         <Input
+          type="password"
           onChange={(event) => handlePassword(event)}
           placeholder={'Пароль'}
           width="278px"

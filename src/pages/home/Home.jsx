@@ -3,7 +3,6 @@ import { Title } from './Home.styled'
 import {
   useGetAllAddsQuery,
   useGetUsersQuery,
-  useGetUserQuery,
 } from '../../features/adds/addsApiSlice'
 import { getAllAdds, getUsers } from '../../features/adds/addsSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,9 +22,6 @@ const Home = () => {
   } = useGetAllAddsQuery()
 
   const { data: users } = useGetUsersQuery()
-  const { data: user } = useGetUserQuery()
-
-  console.log(user)
 
   useEffect(() => {
     dispatch(getUsers(users))

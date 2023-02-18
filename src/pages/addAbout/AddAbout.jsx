@@ -32,7 +32,7 @@ const AddAbout = () => {
   const isLoginOpen = useSelector((state) => state.modal.isOpen)
   const modalName = useSelector((state) => state.modal.modal)
 
-  const user = true
+  const user = useSelector((state) => state.auth?.user)
 
   const { data: reviews, isSuccess, isError, error } = useGetReviewByIdQuery(id)
 
