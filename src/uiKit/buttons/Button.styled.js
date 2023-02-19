@@ -12,7 +12,7 @@ export const StyledButton = styled.button`
   margin: ${({ margin }) => margin};
   box-sizing: border-box;
   width: ${({ width }) => width};
-  pointer-events: ${({ disabled }) => false};
+  pointer-events: ${({ disabled }) => (disabled ? false : true)};
 
   color: ${({ theme }) => theme.colors.white};
 

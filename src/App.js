@@ -5,15 +5,14 @@ import {
   RouterProvider,
 } from 'react-router-dom'
 
-// pages
 import Home from './pages/home/Home'
 import Profile from './pages/profile/Profile'
 import AddAbout from './pages/addAbout/AddAbout'
 import NotFound from './pages/notFound/NotFound'
 import Seller from './pages/seller/Seller'
-
-// layouts
 import RouteLayout from './layouts/RouteLayout'
+
+import RefreshToken from './RefreshToken'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,6 +28,7 @@ const router = createBrowserRouter(
 )
 
 function App() {
+  RefreshToken()
   return <RouterProvider router={router} />
 }
 

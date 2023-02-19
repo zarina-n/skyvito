@@ -2,7 +2,7 @@ import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getModal } from '../../../features/modal/modalSlice'
@@ -21,12 +21,16 @@ const Login = () => {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
-  const [login, { isLoading, isError }] = useLoginUserMutation({
-    email,
-    password,
-  })
+  const [login, { isLoading, isError, error }] = useLoginUserMutation({})
+
+  useEffect(() => {
+    if (isError) {
+      // console.log(error.data.detail)
+      setErrorMessage('Неверный логин или пароль')
+    }
+  }, [error, isError])
 
   const handleEmail = (event) => {
     setEmail(event.target.value)
@@ -51,9 +55,16 @@ const Login = () => {
       dispatch(setUser(true))
       setErrorMessage(null)
       dispatch(isModalOpen(false))
+
+      dispatch(setAccessToken(tokens.access_token))
+      dispatch(setRefreshToken(tokens.refresh_token))
+
+      dispatch(setUser(true))
+      setErrorMessage(null)
+      dispatch(isModalOpen(false))
       navigate('/profile')
     } catch (err) {
-      setErrorMessage(err)
+      // console.log(err)
     }
   }
 

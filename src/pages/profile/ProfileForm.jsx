@@ -1,31 +1,61 @@
 import { AccountForm, Image, Data, Label, Inputs } from './Profile.styled'
 import Input from '../../uiKit/inputs/Input'
 import Button from '../../uiKit/buttons/Button'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { changeUserInfo } from '../../features/users/usersSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { useChangeUserMutation } from '../../features/users/usersApiSlice'
+import {
+  useChangeUserMutation,
+  useUploadAvatarMutation,
+} from '../../features/users/usersApiSlice'
 
 const ProfileForm = ({ person }) => {
   const dispatch = useDispatch()
-  const [edit, setEdit] = useState(false)
-  const [values, setValues] = useState({})
+  const inputRef = React.createRef()
 
-  const { name, surname, city, phone } = values
+  const user = useSelector((state) => state.users?.currentUser)
 
-  const [changeUser, { isLoading, isSucces, isError, error }] =
-    useChangeUserMutation()
+  const [values, setValues] = useState({
+    name: user?.name,
+    surname: user?.surname,
+    city: user?.city,
+    phone: user?.phone,
+  })
 
-  const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value })
-    dispatch(changeUserInfo(values))
+  const [isActive, setIsActive] = useState(true)
+  const [avatar, setAvatar] = useState(null)
+
+  const [changeUser, { isLoading, isError, error }] = useChangeUserMutation()
+  const [changeAvatar] = useUploadAvatarMutation()
+
+  const handleName = (event) => {
+    setValues({ ...values, name: event.target.value })
+    dispatch(changeUserInfo(values.name))
+    setIsActive(false)
+  }
+
+  const handleSurname = (event) => {
+    setValues({ ...values, surname: event.target.value })
+    dispatch(changeUserInfo(values.surname))
+    setIsActive(false)
+  }
+
+  const handleCity = (event) => {
+    setValues({ ...values, city: event.target.value })
+    dispatch(changeUserInfo(values.city))
+    setIsActive(false)
+  }
+
+  const handlePhone = (event) => {
+    setValues({ ...values, phone: event.target.value })
+    dispatch(changeUserInfo(values.phone))
+    setIsActive(false)
   }
 
   const handleSubmit = async (async) => {
     try {
-      const response = await changeUser(values).unwrap()
-
-      console.log(response)
+      await changeUser(values).unwrap()
+      setIsActive(true)
     } catch (err) {
       console.log(err)
     }
@@ -41,7 +71,7 @@ const ProfileForm = ({ person }) => {
     <AccountForm onSubmit={(event) => event.preventDefault()}>
       <Image>
         <img
-          src={person.avatar !== null ? person.avatar : '/img/no_picture.png'}
+          src={user.avatar !== null ? user.avatar : '/img/no_picture.png'}
           alt="avatar"
         />
         <p>Заменить</p>
@@ -51,63 +81,67 @@ const ProfileForm = ({ person }) => {
           <div>
             <Label htmlFor="name">Имя</Label>
             <Input
-              placeholder={person?.name}
+              placeholder={user?.name}
               name="name"
               id="name"
               type="text"
               width="300px"
               placeholderColor="#000"
-              onChange={(event) => handleChange(event)}
+              onChange={(event) => handleName(event)}
+              ref={inputRef}
             />
           </div>
 
           <div>
             <Label htmlFor="surname">Фамилия</Label>
             <Input
-              placeholder={person?.surname}
+              placeholder={user?.surname}
               name="surname"
               type="text"
               id="surname"
               width="300px"
               placeholderColor="#000"
-              onChange={(event) => handleChange(event)}
+              onChange={(event) => handleSurname(event)}
+              ref={inputRef}
             />
           </div>
 
           <div>
             <Label htmlFor="city">Город</Label>
             <Input
-              placeholder={person?.city}
+              placeholder={user?.city}
               name="city"
               type="text"
               id="city"
               width="300px"
               placeholderColor="#000"
-              onChange={(event) => handleChange(event)}
+              onChange={(event) => handleCity(event)}
+              ref={inputRef}
             />
           </div>
 
           <div>
             <Label htmlFor="phone">Телефон</Label>
             <Input
-              placeholder={person?.phone}
+              placeholder={user?.phone}
               name="phone"
               type="text"
               id="phone"
               width="614px"
               placeholderColor="#000"
-              onChange={(event) => handleChange(event)}
+              onChange={(event) => handlePhone(event)}
+              ref={inputRef}
             />
           </div>
         </Inputs>
 
-        {edit ? (
-          <Button margin="30px 0  0 0">Сохранить</Button>
-        ) : (
-          <Button onClick={() => handleSubmit()} margin="30px 0  0 0">
-            Сохранить
-          </Button>
-        )}
+        <Button
+          disabled={isActive}
+          onClick={() => handleSubmit()}
+          margin="30px 0  0 0"
+        >
+          Сохранить
+        </Button>
       </Data>
     </AccountForm>
   )

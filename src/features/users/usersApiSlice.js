@@ -13,12 +13,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       query: () => 'user/all',
     }),
     changeUser: builder.mutation({
-      query: (credentials) => ({
+      query: (body) => ({
         url: 'user',
         method: 'PATCH',
-        body: credentials,
+        body,
       }),
       invalidatesTags: ['User'],
+    }),
+    uploadAvatar: builder.mutation({
+      query: (body) => ({
+        url: 'user/avatar',
+        method: 'POST',
+        body,
+      }),
     }),
   }),
 })
@@ -27,4 +34,5 @@ export const {
   useGetCurrentUserQuery,
   useGetUsersQuery,
   useChangeUserMutation,
+  useUploadAvatarMutation,
 } = usersApiSlice

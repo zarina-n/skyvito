@@ -17,18 +17,18 @@ const Profile = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data)
+      // console.log(data)
       dispatch(setCurrentUser(data))
     }
   }, [isSuccess, dispatch, data])
 
   if (isError) {
-    console.log(error)
+    // console.log(error)
   }
 
   return (
     <>
-      <Title>Здравствуйте, {user?.name}!</Title>
+      <Title>Здравствуйте, {data?.name}!</Title>
       <Heading>Настройки профиля</Heading>
       {user && <ProfileForm person={user} />}
       <Heading>Мои товары</Heading>

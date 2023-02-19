@@ -14,20 +14,8 @@ const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate
 
-  let today = new Date()
-  let dd = today.getDate()
-  let mm = today.getMonth() + 1
-  const yyyy = today.getFullYear()
-
-  if (dd < 10) {
-    dd = `0${dd}`
-  }
-
-  if (mm < 10) {
-    mm = `0${mm}`
-  }
-  today = `${yyyy}-${mm}-${dd}`
-  // console.log(today)
+  const today = new Date()
+  console.log(today.toISOString())
 
   const [userInfo, setUserInfo] = useState({
     password: '',
@@ -79,7 +67,7 @@ const SignUp = () => {
 
       <Input
         onChange={(event) =>
-          setUser({
+          setUserInfo({
             ...userInfo,
             email: event.target.value,
           })
@@ -93,7 +81,7 @@ const SignUp = () => {
       <Input
         type="password"
         onChange={(event) =>
-          setUser({
+          setUserInfo({
             ...userInfo,
             password: event.target.value,
           })
@@ -114,7 +102,7 @@ const SignUp = () => {
 
       <Input
         onChange={(event) =>
-          setUser({
+          setUserInfo({
             ...userInfo,
             name: event.target.value,
           })
@@ -126,7 +114,7 @@ const SignUp = () => {
 
       <Input
         onChange={(event) =>
-          setUser({
+          setUserInfo({
             ...userInfo,
             surname: event.target.value,
           })
