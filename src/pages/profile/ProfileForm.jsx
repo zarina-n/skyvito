@@ -8,10 +8,14 @@ import {
   useChangeUserMutation,
   useUploadAvatarMutation,
 } from '../../features/users/usersApiSlice'
+import { BASE_URL } from '../../features/api/apiSlice'
 
-const ProfileForm = ({ person }) => {
+const ProfileForm = ({ isSuccess, avatarImg }) => {
   const dispatch = useDispatch()
   const inputRef = React.createRef()
+
+  const avatarImgSrc =
+    avatarImg !== null ? `${BASE_URL}${avatarImg}` : '/img/no_picture.png'
 
   const user = useSelector((state) => state.users?.currentUser)
 
@@ -24,9 +28,33 @@ const ProfileForm = ({ person }) => {
 
   const [isActive, setIsActive] = useState(true)
   const [avatar, setAvatar] = useState(null)
+  const [avatarPreview, setAvatarPreview] = useState(null)
 
-  const [changeUser, { isLoading, isError, error }] = useChangeUserMutation()
-  const [changeAvatar] = useUploadAvatarMutation()
+  const [
+    changeUser,
+    {
+      isLoading: isUserChangeLoading,
+      isError: isUserChangeError,
+      error: userChangeError,
+    },
+  ] = useChangeUserMutation()
+
+  const [
+    changeAvatar,
+    {
+      isLoading: isAvatarLoading,
+      isSuccess: isAvatarSuccess,
+      isError: isAvatarError,
+      error: avatarError,
+    },
+  ] = useUploadAvatarMutation()
+
+  const handleAvatar = (event) => {
+    setAvatar(event.target.files[0])
+    setAvatarPreview(event.target.files[0])
+
+    setIsActive(false)
+  }
 
   const handleName = (event) => {
     setValues({ ...values, name: event.target.value })
@@ -56,25 +84,44 @@ const ProfileForm = ({ person }) => {
     try {
       await changeUser(values).unwrap()
       setIsActive(true)
+
+      if (avatar) {
+        const formData = new FormData()
+        formData.append('file', avatar)
+        changeAvatar(formData)
+      }
     } catch (err) {
       console.log(err)
     }
   }
 
   useEffect(() => {
-    if (isError) {
-      console.log(error)
+    if (isUserChangeError) {
+      console.log(userChangeError)
     }
-  }, [isError, error])
+  }, [isUserChangeError, userChangeError])
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAvatarPreview(null)
+    }
+  }, [isSuccess])
 
   return (
     <AccountForm onSubmit={(event) => event.preventDefault()}>
       <Image>
         <img
-          src={user.avatar !== null ? user.avatar : '/img/no_picture.png'}
+          src={
+            avatarPreview ? URL.createObjectURL(avatarPreview) : avatarImgSrc
+          }
           alt="avatar"
         />
-        <p>Заменить</p>
+        <input
+          type="file"
+          id="avatar"
+          onChange={(event) => handleAvatar(event)}
+        />
+        <label htmlFor="avatar">Заменить</label>
       </Image>
       <Data>
         <Inputs>

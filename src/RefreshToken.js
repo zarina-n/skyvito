@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import {
-  setUser,
   setAccessToken,
   setRefreshToken,
   logUserOut,
@@ -32,9 +31,7 @@ export default function RefreshToken() {
 
   useEffect(() => {
     let timeOut = null
-    // const logOut = () => {
-    //   dispatch(setUser(false))
-    // }
+
     if (isError) {
       timeOut = setTimeout(logUserOut, 2000)
     }

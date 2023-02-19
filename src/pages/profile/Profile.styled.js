@@ -24,6 +24,10 @@ export const AccountForm = styled.form`
 export const Image = styled.div`
   text-align: center;
   max-width: 170px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
 
   img {
     width: 170px;
@@ -32,7 +36,12 @@ export const Image = styled.div`
     background: ${({ theme }) => theme.colors.imgBackGround};
   }
 
-  p {
+  input {
+    position: absolute;
+    transform: translate(-10000px);
+  }
+
+  label {
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;

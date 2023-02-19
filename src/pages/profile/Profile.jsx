@@ -5,12 +5,20 @@ import { useGetCurrentUserQuery } from '../../features/users/usersApiSlice'
 import { setCurrentUser } from '../../features/users/usersSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const userAdds = false
 
 const Profile = () => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const user = useSelector((state) => state.users?.currentUser)
+
+  useEffect(() => {
+    if (user === null) {
+      navigate('/')
+    }
+  }, [user, navigate])
 
   const { data, isLoading, isSuccess, isError, error } =
     useGetCurrentUserQuery()
@@ -30,7 +38,7 @@ const Profile = () => {
     <>
       <Title>Здравствуйте, {data?.name}!</Title>
       <Heading>Настройки профиля</Heading>
-      {user && <ProfileForm person={user} />}
+      {user && <ProfileForm isSuccess={isSuccess} avatarImg={user?.avatar} />}
       <Heading>Мои товары</Heading>
       {userAdds ? (
         <Adds count="4" />
