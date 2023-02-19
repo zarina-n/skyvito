@@ -4,18 +4,21 @@ export const StyledButton = styled.button`
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
-  background: ${({ theme }) => theme.colors.primaryBlue};
+  background: ${({ theme, disabled }) =>
+    disabled ? theme.colors.lightSilver : theme.colors.primaryBlue};
   border-radius: 6px;
   border: ${({ theme }) => `1px solid ${theme.colors.white}`};
   padding: 13px 37px;
   margin: ${({ margin }) => margin};
   box-sizing: border-box;
   width: ${({ width }) => width};
+  pointer-events: ${({ disabled }) => false};
 
   color: ${({ theme }) => theme.colors.white};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.hoverBlue};
+    background-color: ${({ theme, disabled }) =>
+      disabled ? 'none' : theme.colors.hoverBlue};
   }
 `
 

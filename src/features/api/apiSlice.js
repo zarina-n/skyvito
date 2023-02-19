@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { setRefreshToken, logUserOut } from '../auth/authSlice'
+import { setAccessToken, logUserOut } from '../auth/authSlice'
 
 export const BASE_URL = 'http://localhost:8090/'
 
@@ -30,7 +30,7 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
     console.log(refreshResult)
 
     if (refreshResult?.data) {
-      api.dispatch(setRefreshToken(refreshResult.access_token))
+      api.dispatch(setAccessToken(refreshResult.access_token))
 
       result = await baseQuery(args, api, extraOptions)
     } else {
@@ -43,5 +43,6 @@ const baseQueryWithReAuth = async (args, api, extraOptions) => {
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithReAuth,
+  tagTypes: ['User'],
   endpoints: (builder) => ({}),
 })

@@ -1,8 +1,42 @@
 import { AccountForm, Image, Data, Label, Inputs } from './Profile.styled'
 import Input from '../../uiKit/inputs/Input'
 import Button from '../../uiKit/buttons/Button'
+import { useState, useEffect } from 'react'
+import { changeUserInfo } from '../../features/users/usersSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { useChangeUserMutation } from '../../features/users/usersApiSlice'
 
 const ProfileForm = ({ person }) => {
+  const dispatch = useDispatch()
+  const [edit, setEdit] = useState(false)
+  const [values, setValues] = useState({})
+
+  const { name, surname, city, phone } = values
+
+  const [changeUser, { isLoading, isSucces, isError, error }] =
+    useChangeUserMutation()
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value })
+    dispatch(changeUserInfo(values))
+  }
+
+  const handleSubmit = async (async) => {
+    try {
+      const response = await changeUser(values).unwrap()
+
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error)
+    }
+  }, [isError, error])
+
   return (
     <AccountForm onSubmit={(event) => event.preventDefault()}>
       <Image>
@@ -23,6 +57,7 @@ const ProfileForm = ({ person }) => {
               type="text"
               width="300px"
               placeholderColor="#000"
+              onChange={(event) => handleChange(event)}
             />
           </div>
 
@@ -35,6 +70,7 @@ const ProfileForm = ({ person }) => {
               id="surname"
               width="300px"
               placeholderColor="#000"
+              onChange={(event) => handleChange(event)}
             />
           </div>
 
@@ -47,6 +83,7 @@ const ProfileForm = ({ person }) => {
               id="city"
               width="300px"
               placeholderColor="#000"
+              onChange={(event) => handleChange(event)}
             />
           </div>
 
@@ -59,11 +96,18 @@ const ProfileForm = ({ person }) => {
               id="phone"
               width="614px"
               placeholderColor="#000"
+              onChange={(event) => handleChange(event)}
             />
           </div>
         </Inputs>
 
-        <Button margin="30px 0  0 0">Сохранить</Button>
+        {edit ? (
+          <Button margin="30px 0  0 0">Сохранить</Button>
+        ) : (
+          <Button onClick={() => handleSubmit()} margin="30px 0  0 0">
+            Сохранить
+          </Button>
+        )}
       </Data>
     </AccountForm>
   )

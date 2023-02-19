@@ -6,14 +6,7 @@ import { setCurrentUser } from '../../features/users/usersSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const person = {
-  name: 'Антон',
-  surname: 'Городецкий',
-  city: 'Санкт-Петербург',
-  phone: 89161234567,
-}
-
-const userAdds = true
+const userAdds = false
 
 const Profile = () => {
   const dispatch = useDispatch()

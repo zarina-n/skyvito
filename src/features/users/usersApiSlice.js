@@ -4,6 +4,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCurrentUser: builder.query({
       query: () => 'user',
+      providesTags: ['User'],
     }),
     getAllReviews: builder.query({
       query: () => 'comments',
@@ -11,7 +12,19 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     getUsers: builder.query({
       query: () => 'user/all',
     }),
+    changeUser: builder.mutation({
+      query: (credentials) => ({
+        url: 'user',
+        method: 'PATCH',
+        body: credentials,
+      }),
+      invalidatesTags: ['User'],
+    }),
   }),
 })
 
-export const { useGetCurrentUserQuery, useGetUsersQuery } = usersApiSlice
+export const {
+  useGetCurrentUserQuery,
+  useGetUsersQuery,
+  useChangeUserMutation,
+} = usersApiSlice

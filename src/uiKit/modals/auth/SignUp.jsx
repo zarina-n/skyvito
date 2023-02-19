@@ -8,12 +8,28 @@ import { getModal, isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
 import { useSignUserUpMutation } from '../../../features/auth/authApiSlice'
 import { useNavigate } from 'react-router-dom'
+import { setUser } from '../../../features/auth/authSlice'
 
 const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate
 
-  const [user, setUser] = useState({
+  let today = new Date()
+  let dd = today.getDate()
+  let mm = today.getMonth() + 1
+  const yyyy = today.getFullYear()
+
+  if (dd < 10) {
+    dd = `0${dd}`
+  }
+
+  if (mm < 10) {
+    mm = `0${mm}`
+  }
+  today = `${yyyy}-${mm}-${dd}`
+  // console.log(today)
+
+  const [userInfo, setUserInfo] = useState({
     password: '',
     role: 'user',
     email: '',
@@ -21,6 +37,7 @@ const SignUp = () => {
     surname: '',
     phone: '',
     city: '',
+    sells_from: today,
   })
 
   const [repeatPswd, setRepeatPswd] = useState('')
@@ -28,18 +45,21 @@ const SignUp = () => {
 
   const [signUp, { isLoading, isError }] = useSignUserUpMutation()
 
-  const isValid = user.password === repeatPswd
+  const isValid = userInfo.password === repeatPswd
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
       if (isValid) {
-        await signUp({ ...user }).unwrap()
+        const response = await signUp({ ...userInfo }).unwrap()
+        console.log(response)
 
         setPasswordError(null)
-        setUser('')
+        setUserInfo('')
         setRepeatPswd('')
+        dispatch(setUser(true))
+
         dispatch(isModalOpen(false))
         navigate('/profile')
       } else {
@@ -60,7 +80,7 @@ const SignUp = () => {
       <Input
         onChange={(event) =>
           setUser({
-            ...user,
+            ...userInfo,
             email: event.target.value,
           })
         }
@@ -74,7 +94,7 @@ const SignUp = () => {
         type="password"
         onChange={(event) =>
           setUser({
-            ...user,
+            ...userInfo,
             password: event.target.value,
           })
         }
@@ -95,7 +115,7 @@ const SignUp = () => {
       <Input
         onChange={(event) =>
           setUser({
-            ...user,
+            ...userInfo,
             name: event.target.value,
           })
         }
@@ -107,7 +127,7 @@ const SignUp = () => {
       <Input
         onChange={(event) =>
           setUser({
-            ...user,
+            ...userInfo,
             surname: event.target.value,
           })
         }
@@ -119,7 +139,7 @@ const SignUp = () => {
       <Input
         onChange={(event) =>
           setUser({
-            ...user,
+            ...userInfo,
             city: event.target.value,
           })
         }
