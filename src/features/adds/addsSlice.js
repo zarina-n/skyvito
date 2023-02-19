@@ -5,6 +5,7 @@ const initialState = {
   currentAdd: null,
   search: null,
   users: null,
+  currentAddImages: null,
 }
 
 const addsSlice = createSlice({
@@ -23,10 +24,18 @@ const addsSlice = createSlice({
     getUsers: (state, action) => {
       state.users = action.payload
     },
+    setCurrentAddImages: (state, action) => {
+      state.currentAddImages = action.payload
+    },
   },
 })
 
-export const { getAllAdds, getCurrentAdd, getSearchValue, getUsers } =
-  addsSlice.actions
+export const {
+  getAllAdds,
+  getCurrentAdd,
+  getSearchValue,
+  getUsers,
+  setCurrentAddImages,
+} = addsSlice.actions
 
 export default addsSlice.reducer

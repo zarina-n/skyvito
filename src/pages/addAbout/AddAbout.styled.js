@@ -10,27 +10,21 @@ export const AddDetails = styled.div`
 export const Images = styled.div`
   width: 480px;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 10px;
 
-  div {
-    display: flex;
-    gap: 10px;
-
-    div {
-      background: ${({ theme }) => theme.colors.imgBackGround};
-      width: 88px;
-      height: 88px;
-      cursor: pointer;
-    }
+  img {
+    background: ${({ theme }) => theme.colors.imgBackGround};
+    width: 88px;
+    height: 88px;
+    cursor: pointer;
   }
-`
 
-export const MainImg = styled.div`
-  width: 100%;
-  height: 480px;
-  background: ${({ theme }) => theme.colors.imgBackGround};
-  cursor: pointer;
+  img:first-child {
+    width: 100%;
+    height: 480px;
+    background: ${({ theme }) => theme.colors.imgBackGround};
+  }
 `
 
 export const Details = styled.div`

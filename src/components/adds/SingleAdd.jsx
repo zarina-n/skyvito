@@ -14,10 +14,10 @@ const SingleAdd = ({ add }) => {
       <Image>
         <img
           src={add.images?.length !== 0 ? imgUrl : '/img/no_picture.png'}
-          alt={add.name}
+          alt={add.title}
         />
       </Image>
-      <Name>{add.name}</Name>
+      <Name>{add.title}</Name>
       <Price>{`${add.price} ₽`}</Price>
       <Details>{add.user.city}</Details>
       <Details>{createdOn(add.created_on)}</Details>

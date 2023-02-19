@@ -2,7 +2,6 @@ import {
   AddDetails,
   AddDescription,
   Images,
-  MainImg,
   Details,
   Seller,
   SellerImg,
@@ -13,7 +12,7 @@ import {
 import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import Button from '../../uiKit/buttons/Button'
 import Modal from '../../uiKit/modals/modal/Modal'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../features/api/apiSlice'
@@ -21,17 +20,26 @@ import { useGetReviewByIdQuery } from '../../features/reviews/reviewApiSlice'
 import { getReviews } from '../../features/reviews/reviewSlice'
 import { getReviewsLength } from './utils'
 import { getModal, isModalOpen } from '../../features/modal/modalSlice'
+import { setCurrentAddImages } from '../../features/adds/addsSlice'
 
 const AddAbout = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
+  const [isCurrentUser, setIsCurrentUser] = useState(false)
 
   const add = useSelector((state) => state.adds?.currentAdd)
+  const addImages = useSelector((state) => state.adds?.currentAddImages)
+  const currentUserId = useSelector((state) => state?.users?.currentUser?.id)
   const currentReviews = useSelector((state) => state.reviews?.reviews)
   const isLoginOpen = useSelector((state) => state.modal.isOpen)
   const modalName = useSelector((state) => state.modal.modal)
 
-  const user = useSelector((state) => state.auth?.user)
+  // console.log(add)
+  useEffect(() => {
+    if (currentUserId && currentUserId === add.user_id) {
+      setIsCurrentUser(true)
+    }
+  }, [currentUserId, add])
 
   const { data: reviews, isSuccess, isError, error } = useGetReviewByIdQuery(id)
 
@@ -43,20 +51,43 @@ const AddAbout = () => {
     }
   }, [dispatch, isSuccess, reviews, isError, error])
 
+  useEffect(() => {
+    if (add) {
+      const images = add.images.map((image) => {
+        return {
+          url: `${BASE_URL}${image.url}`,
+          alt: add.title,
+          id: image.id,
+        }
+      })
+      dispatch(setCurrentAddImages(images))
+    }
+  }, [add, dispatch])
+
+  const displayImage = (images, index) => {
+    const arr = [...images]
+    const clickedImage = arr.splice(index, 1)
+    arr.unshift(clickedImage[0])
+
+    dispatch(setCurrentAddImages(arr))
+  }
+
   return (
     <>
       {isLoginOpen && <Modal modal={modalName} />}
 
       <AddDetails>
         <Images>
-          <MainImg></MainImg>
-          <div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
+          {addImages?.map((image, i) => {
+            return (
+              <img
+                src={image.url}
+                alt={image.title}
+                key={image.id}
+                onClick={() => displayImage(addImages, i)}
+              />
+            )
+          })}
         </Images>
         <Details>
           <h1>{add?.title}</h1>
@@ -75,7 +106,7 @@ const AddAbout = () => {
 
           <h3>{`${add?.price} ₽`}</h3>
 
-          {user ? (
+          {isCurrentUser ? (
             <>
               <Button
                 margin={'0 10px 10px 0'}
