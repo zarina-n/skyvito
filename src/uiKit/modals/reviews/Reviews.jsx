@@ -10,7 +10,7 @@ const Reviews = () => {
     return <Review key={review.id} id={review.id} review={review} />
   })
 
-  console.log(content)
+  //console.log(content)
 
   const user = useSelector((state) => state.auth?.user)
 

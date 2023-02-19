@@ -20,7 +20,6 @@ import { BASE_URL } from '../../features/api/apiSlice'
 import { useGetReviewByIdQuery } from '../../features/reviews/reviewApiSlice'
 import { getReviews } from '../../features/reviews/reviewSlice'
 import { getReviewsLength } from './utils'
-import createdOn from '../../components/adds/utils'
 import { getModal, isModalOpen } from '../../features/modal/modalSlice'
 
 const AddAbout = () => {
@@ -62,7 +61,7 @@ const AddAbout = () => {
         <Details>
           <h1>{add?.title}</h1>
           <ItemInfo>
-            <Text>{createdOn(add?.created_on)}</Text>
+            <Text>{add?.created_on}</Text>
             <Text>{add?.user.city}</Text>
             <span
               onClick={() => {
@@ -102,7 +101,7 @@ const AddAbout = () => {
               <SellerLink to={`/seller/${add?.user.id}`}>
                 {add?.user.name}
               </SellerLink>
-              <Text>{`Продает товары с ${createdOn(add?.created_on)}`}</Text>
+              <Text>{`Продает товары с ${add?.created_on}`}</Text>
             </div>
           </Seller>
         </Details>
