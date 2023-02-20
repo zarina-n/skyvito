@@ -1,7 +1,7 @@
 import { AccountForm, Image, Data, Label, Inputs } from './Profile.styled'
 import Input from '../../uiKit/inputs/Input'
 import Button from '../../uiKit/buttons/Button'
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { changeUserInfo } from '../../features/users/usersSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -9,6 +9,7 @@ import {
   useUploadAvatarMutation,
 } from '../../features/users/usersApiSlice'
 import { BASE_URL } from '../../features/api/apiSlice'
+import { ThreeDots } from 'react-loading-icons'
 
 const ProfileForm = ({ isSuccess, avatarImg }) => {
   const dispatch = useDispatch()
@@ -26,6 +27,9 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
     phone: user?.phone,
   })
 
+  const date = new Date(user?.sells_from)
+  console.log(date.getFullYear())
+
   const [isActive, setIsActive] = useState(true)
   const [avatar, setAvatar] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState(null)
@@ -39,15 +43,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
     },
   ] = useChangeUserMutation()
 
-  const [
-    changeAvatar,
-    {
-      isLoading: isAvatarLoading,
-      isSuccess: isAvatarSuccess,
-      isError: isAvatarError,
-      error: avatarError,
-    },
-  ] = useUploadAvatarMutation()
+  const [changeAvatar] = useUploadAvatarMutation()
 
   const handleAvatar = (event) => {
     setAvatar(event.target.files[0])
@@ -172,7 +168,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
             <Input
               placeholder={user?.phone}
               name="phone"
-              type="text"
+              type="tel"
               id="phone"
               width="614px"
               placeholderColor="#000"
@@ -187,7 +183,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           onClick={() => handleSubmit()}
           margin="30px 0  0 0"
         >
-          Сохранить
+          {isUserChangeLoading ? <ThreeDots /> : 'Сохранить'}
         </Button>
       </Data>
     </AccountForm>

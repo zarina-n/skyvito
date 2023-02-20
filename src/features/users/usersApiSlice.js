@@ -11,6 +11,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     getUsers: builder.query({
       query: () => 'user/all',
+      providesTags: ['User'],
     }),
     changeUser: builder.mutation({
       query: (body) => ({

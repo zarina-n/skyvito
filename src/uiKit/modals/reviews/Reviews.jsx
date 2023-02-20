@@ -6,11 +6,9 @@ import { useSelector } from 'react-redux'
 const Reviews = () => {
   const reviews = useSelector((state) => state.reviews?.reviews)
 
-  const content = reviews.map((review) => {
+  const content = reviews?.map((review) => {
     return <Review key={review.id} id={review.id} review={review} />
   })
-
-  //console.log(content)
 
   const user = useSelector((state) => state.auth?.user)
 

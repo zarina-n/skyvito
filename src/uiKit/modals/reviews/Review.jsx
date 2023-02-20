@@ -15,17 +15,17 @@ const Review = ({ review }) => {
   return (
     <ReviewContainer>
       <div>
-        <Image src={`${BASE_URL}${user[0].avatar}`} />
+        <Image src={`${BASE_URL}${user[0]?.avatar}`} />
       </div>
       <Details>
         <NameDate>
-          <p>{user[0].name}</p>
-          <span>{review.created_on}</span>
+          <p>{user[0]?.name}</p>
+          <span>{review?.created_on}</span>
         </NameDate>
 
         <ReviewContent>
           <p>Комментарий</p>
-          <span>{review.text}</span>
+          <span>{review?.text}</span>
         </ReviewContent>
       </Details>
     </ReviewContainer>

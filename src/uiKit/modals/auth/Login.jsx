@@ -27,12 +27,6 @@ const Login = () => {
 
   const [login, { isLoading, isError, error }] = useLoginUserMutation({})
 
-  const emailRegex = new RegExp(
-    /^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
-    'gm'
-  )
-  const isValidEmail = emailRegex.test(email)
-
   useEffect(() => {
     if (isError) {
       setErrorMessage('Неверный логин или пароль')
@@ -42,10 +36,8 @@ const Login = () => {
       setErrorMessage('Введите email')
     } else if (password === '') {
       setErrorMessage('Введите пароль')
-    } else if (!isValidEmail) {
-      setErrorMessage('Некорректный email')
     }
-  }, [error, isError, email, isValidEmail, password])
+  }, [error, isError, email, password])
 
   const handleEmail = (event) => {
     setEmail(event.target.value)
@@ -58,7 +50,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (email && password && isValidEmail) {
+    if (email && password) {
       try {
         const tokens = await login({
           email,
