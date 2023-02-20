@@ -22,6 +22,7 @@ import { getReviewsLength } from './utils'
 import { getModal, isModalOpen } from '../../features/modal/modalSlice'
 import { setCurrentAddImages } from '../../features/adds/addsSlice'
 import { useDeleteAddMutation } from '../../features/adds/addsApiSlice'
+import createdOn from '../../components/adds/utils'
 
 const AddAbout = () => {
   const { id } = useParams()
@@ -36,6 +37,8 @@ const AddAbout = () => {
   const currentReviews = useSelector((state) => state.reviews?.reviews)
   const isLoginOpen = useSelector((state) => state.modal.isOpen)
   const modalName = useSelector((state) => state.modal.modal)
+
+  const date = new Date(add?.user?.sells_from).getFullYear()
 
   const handleDeleteAdd = async () => {
     try {
@@ -103,7 +106,7 @@ const AddAbout = () => {
         <Details>
           <h1>{add?.title}</h1>
           <ItemInfo>
-            <Text>{add?.created_on}</Text>
+            <Text>{createdOn(add?.created_on)}</Text>
             <Text>{add?.user.city}</Text>
             <span
               onClick={() => {
@@ -145,7 +148,7 @@ const AddAbout = () => {
               <SellerLink to={`/seller/${add?.user.id}`}>
                 {add?.user.name}
               </SellerLink>
-              <Text>{`Продает товары с ${add?.created_on}`}</Text>
+              <Text>{`Продает товары с ${date}`}</Text>
             </div>
           </Seller>
         </Details>

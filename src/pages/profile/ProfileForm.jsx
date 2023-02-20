@@ -27,9 +27,6 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
     phone: user?.phone,
   })
 
-  const date = new Date(user?.sells_from)
-  console.log(date.getFullYear())
-
   const [isActive, setIsActive] = useState(true)
   const [avatar, setAvatar] = useState(null)
   const [avatarPreview, setAvatarPreview] = useState(null)

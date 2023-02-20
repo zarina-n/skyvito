@@ -9,8 +9,6 @@ import { useNavigate } from 'react-router-dom'
 import { useGetCurrentUserAddsQuery } from '../../features/adds/addsApiSlice'
 import { setUserAdds } from '../../features/adds/addsSlice'
 
-// const userAdds = false
-
 const Profile = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -25,12 +23,10 @@ const Profile = () => {
     }
   }, [user, navigate])
 
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetCurrentUserQuery()
+  const { data, isSuccess, isError, error } = useGetCurrentUserQuery()
 
   const {
     data: userAdds,
-    isLoading: isUserAddsLoading,
     isSuccess: isUserAddsSuccess,
     isError: isUserAddsError,
     error: userAddsError,
@@ -38,14 +34,12 @@ const Profile = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      // console.log(data)
       dispatch(setCurrentUser(data))
     }
   }, [isSuccess, dispatch, data])
 
   useEffect(() => {
     if (isUserAddsSuccess) {
-      // console.log(userAdds)
       dispatch(setUserAdds(userAdds))
     } else if (isUserAddsError) {
       console.log(userAddsError)
@@ -53,7 +47,7 @@ const Profile = () => {
   }, [isUserAddsSuccess, dispatch, userAdds, isUserAddsError, userAddsError])
 
   if (isError) {
-    // console.log(error)
+    console.log(error)
   }
 
   return (
