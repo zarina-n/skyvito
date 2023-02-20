@@ -25,6 +25,7 @@ export const Images = styled.div`
     width: 100%;
     height: 480px;
     background: ${({ theme }) => theme.colors.imgBackGround};
+    cursor: unset;
   }
 `
 

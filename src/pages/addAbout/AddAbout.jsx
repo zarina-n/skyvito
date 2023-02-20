@@ -46,7 +46,6 @@ const AddAbout = () => {
     }
   }
 
-  // console.log(add)
   useEffect(() => {
     if (currentUserId && currentUserId === add.user_id) {
       setIsCurrentUser(true)

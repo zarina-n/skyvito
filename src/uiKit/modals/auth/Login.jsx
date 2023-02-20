@@ -15,6 +15,8 @@ import {
 } from '../../../features/auth/authSlice'
 import { isModalOpen } from '../../../features/modal/modalSlice'
 
+import { ThreeDots } from 'react-loading-icons'
+
 const Login = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -27,7 +29,6 @@ const Login = () => {
 
   useEffect(() => {
     if (isError) {
-      // console.log(error.data.detail)
       setErrorMessage('Неверный логин или пароль')
     }
   }, [error, isError])
@@ -43,28 +44,38 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    try {
-      const tokens = await login({
-        email,
-        password,
-      }).unwrap()
+    if (email === '' && password === '') {
+      setErrorMessage('Введите логин и пароль')
+    } else if (email === '') {
+      setErrorMessage('Введите логин')
+    } else if (password === '') {
+      setErrorMessage('Введите пароль')
+    }
 
-      dispatch(setAccessToken(tokens.access_token))
-      dispatch(setRefreshToken(tokens.refresh_token))
+    if (email && password) {
+      try {
+        const tokens = await login({
+          email,
+          password,
+        }).unwrap()
 
-      dispatch(setUser(true))
-      setErrorMessage(null)
-      dispatch(isModalOpen(false))
+        dispatch(setAccessToken(tokens.access_token))
+        dispatch(setRefreshToken(tokens.refresh_token))
 
-      dispatch(setAccessToken(tokens.access_token))
-      dispatch(setRefreshToken(tokens.refresh_token))
+        dispatch(setUser(true))
+        setErrorMessage(null)
+        dispatch(isModalOpen(false))
 
-      dispatch(setUser(true))
-      setErrorMessage(null)
-      dispatch(isModalOpen(false))
-      navigate('/profile')
-    } catch (err) {
-      // console.log(err)
+        dispatch(setAccessToken(tokens.access_token))
+        dispatch(setRefreshToken(tokens.refresh_token))
+
+        dispatch(setUser(true))
+        setErrorMessage(null)
+        dispatch(isModalOpen(false))
+        navigate('/profile')
+      } catch (err) {
+        console.log(err)
+      }
     }
   }
 
@@ -89,7 +100,7 @@ const Login = () => {
 
         {errorMessage && <p>{errorMessage}</p>}
         <Button type="submit" margin="60px 0 20px 0" width="278px">
-          {isLoading ? 'Loading' : ' Войти'}
+          {isLoading ? <ThreeDots /> : ' Войти'}
         </Button>
         <WhiteSignUpButton
           onClick={() => {

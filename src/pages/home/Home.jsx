@@ -6,6 +6,8 @@ import { getAllAdds, getUsers } from '../../features/adds/addsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
+import { ThreeDots } from 'react-loading-icons'
+
 const Home = () => {
   const dispatch = useDispatch()
   const allAdds = useSelector((state) => state.adds?.allAdds)
@@ -34,7 +36,7 @@ const Home = () => {
   let content
 
   if (isLoading) {
-    content = <p>Loading...</p>
+    content = <ThreeDots />
   } else if (isSuccess) {
     content = (
       <Adds
