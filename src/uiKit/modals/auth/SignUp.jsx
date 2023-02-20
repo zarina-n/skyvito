@@ -31,12 +31,6 @@ const SignUp = () => {
 
   const [signUp, { isLoading, isError }] = useSignUserUpMutation()
 
-  const emailRegex = new RegExp(
-    /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
-    'gm'
-  )
-  const isValidEmail = emailRegex.test(userInfo.email)
-
   useEffect(() => {
     if (isError) {
       setErrorMessage('Неверный логин или пароль')
@@ -46,20 +40,17 @@ const SignUp = () => {
       setErrorMessage('Введите email')
     } else if (userInfo.password === '') {
       setErrorMessage('Введите пароль')
-    } else if (!isValidEmail) {
-      setErrorMessage('Некорректный email')
     }
-  }, [isError, isValidEmail, userInfo])
+  }, [isError, userInfo])
 
-  const isValid = userInfo.password === repeatPswd && isValidEmail
+  const isValid = userInfo.password === repeatPswd && userInfo.email
 
   const handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
       if (isValid) {
-        const response = await signUp({ ...userInfo }).unwrap()
-        console.log(response)
+        await signUp({ ...userInfo }).unwrap()
 
         setErrorMessage(null)
         setUserInfo('')
@@ -69,7 +60,6 @@ const SignUp = () => {
         dispatch(isModalOpen(false))
         navigate('/profile')
       } else {
-        console.log('Пароли не совпадают')
         setErrorMessage('Пароли не совпадают')
       }
     } catch (err) {
