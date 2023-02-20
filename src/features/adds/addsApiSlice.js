@@ -25,15 +25,38 @@ export const addsApiSlice = apiSlice.injectEndpoints({
     }),
     createAddWithNoImages: builder.mutation({
       query: (data) => ({
-        url: `/ads${data.query}`,
+        url: `ads${data.query}`,
         method: 'POST',
       }),
       invalidatesTags: ['Adds'],
     }),
     deleteAdd: builder.mutation({
       query: (id) => ({
-        url: `/ads/${id}`,
+        url: `ads/${id}`,
         method: 'DELETE',
+      }),
+      invalidatesTags: ['Adds'],
+    }),
+    changeAdd: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `ads/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      invalidatesTags: ['Adds'],
+    }),
+    deleteAddImage: builder.mutation({
+      query: ({ id, query }) => ({
+        url: `ads/${id}/image/${query}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Adds'],
+    }),
+    uploadImageToAdd: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `ads/${id}/image`,
+        method: 'POST',
+        body,
       }),
       invalidatesTags: ['Adds'],
     }),
@@ -47,4 +70,7 @@ export const {
   useCreateAddWithNoImagesMutation,
   useGetCurrentUserAddsQuery,
   useDeleteAddMutation,
+  useChangeAddMutation,
+  useDeleteAddImageMutation,
+  useUploadImageToAddMutation,
 } = addsApiSlice

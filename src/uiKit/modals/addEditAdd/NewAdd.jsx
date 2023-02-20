@@ -23,7 +23,7 @@ const NewAdd = () => {
   const [createAdd] = useCreateAddMutation()
   const [createAddWithNoImages] = useCreateAddWithNoImagesMutation()
 
-  const [isDisable, setIsDisable] = useState(false)
+  const [isDisable, setIsDisable] = useState(true)
   const [preview, setPreview] = useState([])
   const [values, setValues] = useState({
     title: '',
@@ -35,31 +35,33 @@ const NewAdd = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    try {
-      const formData = new FormData()
+    if (values.title !== '') {
+      try {
+        const formData = new FormData()
 
-      const query = `?title=${values.title}&description=${
-        values.description
-      }&price=${Number(values.price)}`
+        const query = `?title=${values.title}&description=${
+          values.description
+        }&price=${Number(values.price)}`
 
-      values.files?.forEach((picture) => formData.append('files', picture))
+        values.files?.forEach((picture) => formData.append('files', picture))
 
-      const data = {
-        query,
-        formData,
+        const data = {
+          query,
+          formData,
+        }
+
+        if (values.files.length > 0) {
+          const response = await createAdd(data)
+          console.log(response)
+        } else {
+          const response = createAddWithNoImages(data)
+          console.log(response)
+        }
+
+        dispatch(isModalOpen(false))
+      } catch (err) {
+        console.log(err)
       }
-
-      if (values.files.length > 0) {
-        const response = await createAdd(data)
-        console.log(response)
-      } else {
-        const response = createAddWithNoImages(data)
-        console.log(response)
-      }
-
-      dispatch(isModalOpen(false))
-    } catch (err) {
-      console.log(err)
     }
   }
 
@@ -68,6 +70,7 @@ const NewAdd = () => {
 
     if (newFiles) {
       const updatedList = [...values.files, ...newFiles]
+      console.log(updatedList)
       setValues({
         ...values,
         files: updatedList,
@@ -100,13 +103,7 @@ const NewAdd = () => {
   }, [values.files])
 
   useEffect(() => {
-    if (
-      values.title === '' &&
-      values.description === '' &&
-      values.price === ''
-    ) {
-      setIsDisable(true)
-    }
+    console.log(values)
   }, [values])
 
   return (
