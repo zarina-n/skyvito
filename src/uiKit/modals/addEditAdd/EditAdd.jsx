@@ -6,7 +6,7 @@ import {
   Title,
   Heading,
   Images,
-  Image,
+  UploadImageDiv,
   Price,
 } from './AddEdit.styled'
 
@@ -42,11 +42,7 @@ const EditAdd = () => {
           <span>не более 5 фотографий</span>
         </div>
         <div>
-          <Image />
-          <Image />
-          <Image />
-          <Image />
-          <Image />
+          <UploadImageDiv />
         </div>
       </Images>
 

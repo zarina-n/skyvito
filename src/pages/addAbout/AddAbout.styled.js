@@ -18,6 +18,7 @@ export const Images = styled.div`
     width: 88px;
     height: 88px;
     cursor: pointer;
+    border-radius: 5px;
   }
 
   img:first-child {

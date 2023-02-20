@@ -13,7 +13,7 @@ import ShowNumberButton from '../../uiKit/buttons/ShowNumberButton'
 import Button from '../../uiKit/buttons/Button'
 import Modal from '../../uiKit/modals/modal/Modal'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { BASE_URL } from '../../features/api/apiSlice'
 import { useGetReviewByIdQuery } from '../../features/reviews/reviewApiSlice'
@@ -21,11 +21,14 @@ import { getReviews } from '../../features/reviews/reviewSlice'
 import { getReviewsLength } from './utils'
 import { getModal, isModalOpen } from '../../features/modal/modalSlice'
 import { setCurrentAddImages } from '../../features/adds/addsSlice'
+import { useDeleteAddMutation } from '../../features/adds/addsApiSlice'
 
 const AddAbout = () => {
   const { id } = useParams()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [isCurrentUser, setIsCurrentUser] = useState(false)
+  const [deleteAdd] = useDeleteAddMutation()
 
   const add = useSelector((state) => state.adds?.currentAdd)
   const addImages = useSelector((state) => state.adds?.currentAddImages)
@@ -33,6 +36,15 @@ const AddAbout = () => {
   const currentReviews = useSelector((state) => state.reviews?.reviews)
   const isLoginOpen = useSelector((state) => state.modal.isOpen)
   const modalName = useSelector((state) => state.modal.modal)
+
+  const handleDeleteAdd = async () => {
+    try {
+      deleteAdd(id)
+      navigate('/profile')
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   // console.log(add)
   useEffect(() => {
@@ -117,7 +129,9 @@ const AddAbout = () => {
               >
                 Редактировать
               </Button>
-              <Button>Снять с публикации</Button>
+              <Button onClick={() => handleDeleteAdd()}>
+                Снять с публикации
+              </Button>
             </>
           ) : (
             <ShowNumberButton phoneNumber={add?.user.phone}></ShowNumberButton>

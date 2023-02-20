@@ -12,10 +12,39 @@ export const addsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getCurrentUserAdds: builder.query({
-      query: () => 'adds/me',
+      query: () => 'ads/me',
       providesTags: ['Adds'],
+    }),
+    createAdd: builder.mutation({
+      query: (data) => ({
+        url: `ads${data.query}`,
+        method: 'POST',
+        body: data.formData,
+      }),
+      invalidatesTags: ['Adds'],
+    }),
+    createAddWithNoImages: builder.mutation({
+      query: (data) => ({
+        url: `/ads${data.query}`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Adds'],
+    }),
+    deleteAdd: builder.mutation({
+      query: (id) => ({
+        url: `/ads/${id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Adds'],
     }),
   }),
 })
 
-export const { useGetAllAddsQuery, useGetAddByIdQuery } = addsApiSlice
+export const {
+  useGetAllAddsQuery,
+  useGetAddByIdQuery,
+  useCreateAddMutation,
+  useCreateAddWithNoImagesMutation,
+  useGetCurrentUserAddsQuery,
+  useDeleteAddMutation,
+} = addsApiSlice
