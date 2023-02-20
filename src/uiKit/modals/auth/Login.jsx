@@ -27,11 +27,25 @@ const Login = () => {
 
   const [login, { isLoading, isError, error }] = useLoginUserMutation({})
 
+  const emailRegex = new RegExp(
+    /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+    'gm'
+  )
+  const isValidEmail = emailRegex.test(email)
+
   useEffect(() => {
     if (isError) {
       setErrorMessage('Неверный логин или пароль')
+    } else if (email === '' && password === '') {
+      setErrorMessage('Введите email и пароль')
+    } else if (email === '') {
+      setErrorMessage('Введите email')
+    } else if (password === '') {
+      setErrorMessage('Введите пароль')
+    } else if (!isValidEmail) {
+      setErrorMessage('Некорректный email')
     }
-  }, [error, isError])
+  }, [error, isError, email, isValidEmail, password])
 
   const handleEmail = (event) => {
     setEmail(event.target.value)
@@ -44,15 +58,7 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (email === '' && password === '') {
-      setErrorMessage('Введите логин и пароль')
-    } else if (email === '') {
-      setErrorMessage('Введите логин')
-    } else if (password === '') {
-      setErrorMessage('Введите пароль')
-    }
-
-    if (email && password) {
+    if (email && password && isValidEmail) {
       try {
         const tokens = await login({
           email,
@@ -75,6 +81,7 @@ const Login = () => {
         navigate('/profile')
       } catch (err) {
         console.log(err)
+        setErrorMessage('Произошла ошибка')
       }
     }
   }
@@ -90,6 +97,7 @@ const Login = () => {
           onChange={(event) => handleEmail(event)}
           placeholder={'Email'}
           width="278px"
+          type="email"
         />
         <Input
           type="password"

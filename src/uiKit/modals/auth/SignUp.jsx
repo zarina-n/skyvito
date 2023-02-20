@@ -2,7 +2,7 @@ import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import { getModal, isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
@@ -10,12 +10,11 @@ import { useSignUserUpMutation } from '../../../features/auth/authApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { setUser } from '../../../features/auth/authSlice'
 
+import { ThreeDots } from 'react-loading-icons'
+
 const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate
-
-  const today = new Date()
-  console.log(today.toISOString())
 
   const [userInfo, setUserInfo] = useState({
     password: '',
@@ -25,15 +24,34 @@ const SignUp = () => {
     surname: '',
     phone: '',
     city: '',
-    sells_from: today,
   })
 
   const [repeatPswd, setRepeatPswd] = useState('')
-  const [passwordError, setPasswordError] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const [signUp, { isLoading, isError }] = useSignUserUpMutation()
 
-  const isValid = userInfo.password === repeatPswd
+  const emailRegex = new RegExp(
+    /^[A-Za-z0-9_!#$%&'*+\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+    'gm'
+  )
+  const isValidEmail = emailRegex.test(userInfo.email)
+
+  useEffect(() => {
+    if (isError) {
+      setErrorMessage('Неверный логин или пароль')
+    } else if (userInfo.email === '' && userInfo.password === '') {
+      setErrorMessage('Введите email и пароль')
+    } else if (userInfo.email === '') {
+      setErrorMessage('Введите email')
+    } else if (userInfo.password === '') {
+      setErrorMessage('Введите пароль')
+    } else if (!isValidEmail) {
+      setErrorMessage('Некорректный email')
+    }
+  }, [isError, isValidEmail, userInfo])
+
+  const isValid = userInfo.password === repeatPswd && isValidEmail
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -43,7 +61,7 @@ const SignUp = () => {
         const response = await signUp({ ...userInfo }).unwrap()
         console.log(response)
 
-        setPasswordError(null)
+        setErrorMessage(null)
         setUserInfo('')
         setRepeatPswd('')
         dispatch(setUser(true))
@@ -52,10 +70,11 @@ const SignUp = () => {
         navigate('/profile')
       } else {
         console.log('Пароли не совпадают')
-        setPasswordError('Пароли не совпадают')
+        setErrorMessage('Пароли не совпадают')
       }
     } catch (err) {
       console.log(err)
+      setErrorMessage('Произошла ошибка')
     }
   }
 
@@ -73,6 +92,7 @@ const SignUp = () => {
           })
         }
         placeholder={'Email'}
+        type="email"
         name="email"
         width="278px"
         required
@@ -136,10 +156,10 @@ const SignUp = () => {
         width="278px"
       />
 
-      <p>{passwordError}</p>
+      <p>{errorMessage}</p>
 
       <Button type="submit" margin="60px 0 20px 0" width="278px">
-        Зарегистрироваться
+        {isLoading ? <ThreeDots /> : 'Зарегистрироваться'}{' '}
       </Button>
 
       <WhiteSignUpButton
