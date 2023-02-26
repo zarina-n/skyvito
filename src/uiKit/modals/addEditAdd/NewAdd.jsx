@@ -19,11 +19,13 @@ import { isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
 
 const NewAdd = () => {
+  const imgLimit = 5
   const dispatch = useDispatch()
   const [createAdd] = useCreateAddMutation()
   const [createAddWithNoImages] = useCreateAddWithNoImagesMutation()
 
   const [isDisable, setIsDisable] = useState(true)
+  const [imgQuality, setImgQuality] = useState(0)
   const [preview, setPreview] = useState([])
   const [values, setValues] = useState({
     title: '',
@@ -66,7 +68,9 @@ const NewAdd = () => {
   }
 
   const handlePictureChange = (event) => {
-    const newFiles = Object.values(event.target.files).map((file) => file)
+    const newFiles = Object.values(event.target.files)
+      .map((file) => file)
+      .slice(0, 5)
 
     if (newFiles) {
       const updatedList = [...values.files, ...newFiles]
@@ -78,9 +82,6 @@ const NewAdd = () => {
     }
 
     setIsDisable(false)
-
-    console.log(event.target.files)
-    console.log(values.files)
   }
 
   const handleDeletePreview = (id) => {
@@ -96,15 +97,16 @@ const NewAdd = () => {
   useEffect(() => {
     if (values.files.length === 0) {
       setPreview([])
+    } else if (values.files.length >= 5) {
+      setImgQuality(4)
     }
+
     const objectUrl = []
     values.files.forEach((image) => objectUrl.push(URL.createObjectURL(image)))
-    setPreview(objectUrl)
-  }, [values.files])
 
-  useEffect(() => {
-    console.log(values)
-  }, [values])
+    setPreview(objectUrl)
+    setImgQuality(objectUrl.length)
+  }, [values.files])
 
   return (
     <StyledNewAdd>
@@ -147,60 +149,22 @@ const NewAdd = () => {
             onChange={(event) => handlePictureChange(event)}
           />
 
-          {preview && preview[0] ? (
+          {preview.map((preview, i) => (
             <UploadedImage
-              src={preview[0]}
-              onClick={() => handleDeletePreview(0)}
+              src={preview}
+              onClick={() => handleDeletePreview(i)}
             />
-          ) : (
-            <label htmlFor="images">
-              <UploadImageDiv />
-            </label>
-          )}
+          ))}
 
-          {preview && preview[1] ? (
-            <UploadedImage
-              src={preview[1]}
-              onClick={() => handleDeletePreview(1)}
-            />
-          ) : (
-            <label htmlFor="images">
-              <UploadImageDiv />
-            </label>
-          )}
-
-          {preview && preview[2] ? (
-            <UploadedImage
-              src={preview[2]}
-              onClick={() => handleDeletePreview(2)}
-            />
-          ) : (
-            <label htmlFor="images">
-              <UploadImageDiv />
-            </label>
-          )}
-
-          {preview && preview[3] ? (
-            <UploadedImage
-              src={preview[3]}
-              onClick={() => handleDeletePreview(3)}
-            />
-          ) : (
-            <label htmlFor="images">
-              <UploadImageDiv />
-            </label>
-          )}
-
-          {preview && preview[4] ? (
-            <UploadedImage
-              src={preview[4]}
-              onClick={() => handleDeletePreview(4)}
-            />
-          ) : (
-            <label htmlFor="images">
-              <UploadImageDiv />
-            </label>
-          )}
+          {Array(imgLimit - imgQuality)
+            .fill()
+            .map((index) => {
+              return (
+                <label htmlFor="images" key={index}>
+                  <UploadImageDiv />
+                </label>
+              )
+            })}
         </div>
       </Images>
 
@@ -214,7 +178,6 @@ const NewAdd = () => {
             setValues({ ...values, price: Number(event.target.value) })
             setIsDisable(false)
           }}
-          required={true}
         />
       </Price>
 

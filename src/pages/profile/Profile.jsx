@@ -15,14 +15,6 @@ const Profile = () => {
   const user = useSelector((state) => state.users?.currentUser)
   const userAddsFromState = useSelector((state) => state.adds?.userAdds)
 
-  useEffect(() => {
-    if (user === null) {
-      setTimeout(() => {
-        navigate('/')
-      }, 5000)
-    }
-  }, [user, navigate])
-
   const { data, isSuccess, isError, error } = useGetCurrentUserQuery()
 
   const {

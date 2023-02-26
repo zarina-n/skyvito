@@ -18,19 +18,20 @@ import {
   useDeleteAddImageMutation,
   useUploadImageToAddMutation,
 } from '../../../features/adds/addsApiSlice'
+import { getCurrentAdd } from '../../../features/adds/addsSlice'
 import { useParams } from 'react-router-dom'
+import { isModalOpen } from '../../../features/modal/modalSlice'
 
 const EditAdd = () => {
   const { id } = useParams()
   const add = useSelector((state) => state.adds?.currentAdd)
   const dispatch = useDispatch()
-  const LIMIT = 5
+  const imgLimit = 5
+  const imgQuality = add.images.length
 
   const [isDisable, setIsDisable] = useState(false)
-  const [preview, setPreview] = useState([])
-  const [fileList, setFileList] = useState([])
-  const [limit, setLimit] = useState(LIMIT)
-
+  // const [imgQuality, setImgQuality] = useState(add.images.length)
+  // const [preview, setPreview] = useState([])
   const [values, setValues] = useState({
     title: add.title,
     description: add.description,
@@ -38,129 +39,71 @@ const EditAdd = () => {
     price: add.price,
   })
 
-  const [changeAdd, { isSuccess: isChangeAddSuccess }] = useChangeAddMutation()
-  const [addImage, { isSuccess: isAddImageSuccess }] =
-    useUploadImageToAddMutation()
-  const [deleteImage] = useDeleteAddImageMutation()
+  const [changeAdd] = useChangeAddMutation()
 
-  useEffect(() => {
-    setLimit(LIMIT - add.images.length - fileList.length)
-  }, [add.images.length, fileList.length])
-
-  useEffect(() => {
-    if (fileList.length === 0) {
-      setPreview([])
-    }
-    const objectUrl = []
-    fileList.forEach((image) => objectUrl.push(URL.createObjectURL(image)))
-    setPreview(objectUrl)
-  }, [fileList])
-
-  const handlePictureChange = (event) => {
-    const newFiles = Object.values(event.target.files).map((file) => file)
-
-    if (newFiles) {
-      const updatedList = [...values.files, ...newFiles]
-      setValues({
-        ...values,
-        files: updatedList,
-      })
-    }
-
-    setIsDisable(false)
-  }
-
-  const onSubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
 
     try {
-      const data = {
-        title: values.title,
-        description: values.description,
-        price: Number(values.price),
-      }
-      const response = await changeAdd({ id: id, body: data })
-      console.log(response)
+      const response = await changeAdd({ id: id, body: values })
 
-      if (fileList) {
-        fileList.forEach((el) => {
-          const formData = new FormData()
-          formData.append('file', el)
-          addImage({ id: id, body: formData })
-        })
-      }
+      console.log(response)
+      dispatch(getCurrentAdd(response.data))
+      dispatch(isModalOpen(false))
     } catch (err) {
       console.log(err)
     }
   }
 
-  const handleDeleteImage = (id, url) => {
-    const query = `?file_url=${url}`
-    deleteImage({ id, query })
-  }
-
-  const handleDeletePreview = (id) => {
-    const copy = [...fileList]
-    copy.splice(id, 1)
-    setFileList(copy)
-    setPreview(preview.slice(id, 1))
-  }
-
-  useEffect(() => {
-    if (fileList.length > 5) {
-      const copy = [...fileList]
-      copy.splice(5, 1)
-      setFileList(copy)
-    }
-  }, [fileList])
-
-  useEffect(() => {
-    console.log(preview)
-  }, [preview])
-
-  // console.log(values)
-
   return (
     <StyledNewAdd>
       <Title>Редактировать объявление</Title>
       <Heading>Название</Heading>
-      <Input type="text" width={'100%'} placeholder={add.title} />
+      <Input
+        type="text"
+        width={'100%'}
+        placeholder={add.title}
+        onChange={(event) => {
+          setValues({ ...values, title: event.target.value })
+        }}
+      />
 
       <Heading>Описание</Heading>
-      <TextArea width={'100%'} height={'200px'} placeholder={add.description} />
+      <TextArea
+        width={'100%'}
+        height={'200px'}
+        placeholder={add.description}
+        onChange={(event) => {
+          setValues({ ...values, description: event.target.value })
+        }}
+      />
 
       <Images>
         <div>
           <Heading>Фотографии товара</Heading>
           <span>не более 5 фотографий</span>
         </div>
-
         <div>
           <input
             type="file"
             multiple
             id="images"
-            onChange={(event) => handlePictureChange(event)}
+            // onClick={(event) => handlePictureChange(event)}
           />
 
-          {add.images.map((img, index) => (
+          {add?.images.map((img) => (
             <UploadedImage
               src={`${BASE_URL}${img.url}`}
-              key={index}
               alt={add.title}
-              onClick={() => handleDeleteImage(id, img.url)}
+              key={img.id}
             />
           ))}
 
-          {preview.map((img, index) => (
-            <UploadedImage src={preview.name} alt="image_preview" key={index} />
-          ))}
-
-          {Array(limit)
+          {Array(imgLimit - imgQuality)
             .fill()
-            .map((index) => {
+            .map((i) => {
               return (
-                <label htmlFor="images" key={index}>
+                <label htmlFor="images" key={i}>
                   <UploadImageDiv />
                 </label>
               )
@@ -170,14 +113,21 @@ const EditAdd = () => {
 
       <Heading>Цена</Heading>
       <Price>
-        <Input type="text" width={'200px'} placeholder={add.price} />
+        <Input
+          type="text"
+          width={'200px'}
+          placeholder={add.price}
+          onChange={(event) => {
+            setValues({ ...values, price: event.target.value })
+          }}
+        />
       </Price>
 
       <Button
         margin={'10px 0 0 0'}
         disabled={isDisable}
         type="submit"
-        onClick={(event) => onSubmit(event)}
+        onClick={(event) => handleSubmit(event)}
       >
         Сохранить
       </Button>
