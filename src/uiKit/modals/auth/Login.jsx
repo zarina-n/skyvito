@@ -30,12 +30,6 @@ const Login = () => {
   useEffect(() => {
     if (isError) {
       setErrorMessage('Неверный логин или пароль')
-    } else if (email === '' && password === '') {
-      setErrorMessage('Введите email и пароль')
-    } else if (email === '') {
-      setErrorMessage('Введите email')
-    } else if (password === '') {
-      setErrorMessage('Введите пароль')
     }
   }, [error, isError, email, password])
 
@@ -50,7 +44,14 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    if (email && password) {
+    // if (email && password) {
+    if (email === '' && password === '') {
+      setErrorMessage('Введите email и пароль')
+    } else if (email === '') {
+      setErrorMessage('Введите email')
+    } else if (password === '') {
+      setErrorMessage('Введите пароль')
+    } else {
       try {
         const tokens = await login({
           email,
@@ -73,7 +74,7 @@ const Login = () => {
         navigate('/profile')
       } catch (err) {
         console.log(err)
-        setErrorMessage('Произошла ошибка')
+        setErrorMessage('Неверный логин или пароль')
       }
     }
   }

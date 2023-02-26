@@ -17,12 +17,22 @@ import {
 import { useState, useEffect } from 'react'
 import { isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
+import { ThreeDots } from 'react-loading-icons'
 
 const NewAdd = () => {
   const imgLimit = 5
   const dispatch = useDispatch()
-  const [createAdd] = useCreateAddMutation()
-  const [createAddWithNoImages] = useCreateAddWithNoImagesMutation()
+  const [
+    createAdd,
+    { isSuccess: isCreateSuccess, isLoading: isCreateLoading },
+  ] = useCreateAddMutation()
+  const [
+    createAddWithNoImages,
+    {
+      isSuccess: isCreateWithNoAddsSuccess,
+      isLoading: isCreateWithNoAddsLoading,
+    },
+  ] = useCreateAddWithNoImagesMutation()
 
   const [isDisable, setIsDisable] = useState(true)
   const [imgQuality, setImgQuality] = useState(0)
@@ -59,8 +69,6 @@ const NewAdd = () => {
           const response = createAddWithNoImages(data)
           console.log(response)
         }
-
-        dispatch(isModalOpen(false))
       } catch (err) {
         console.log(err)
       }
@@ -107,6 +115,12 @@ const NewAdd = () => {
     setPreview(objectUrl)
     setImgQuality(objectUrl.length)
   }, [values.files])
+
+  useEffect(() => {
+    if (isCreateSuccess || isCreateWithNoAddsSuccess) {
+      dispatch(isModalOpen(false))
+    }
+  }, [isCreateSuccess, isCreateWithNoAddsSuccess, dispatch])
 
   return (
     <StyledNewAdd>
@@ -160,8 +174,8 @@ const NewAdd = () => {
             .fill()
             .map((index) => {
               return (
-                <label htmlFor="images" key={index}>
-                  <UploadImageDiv />
+                <label htmlFor="images">
+                  <UploadImageDiv key={index} />
                 </label>
               )
             })}
@@ -186,7 +200,11 @@ const NewAdd = () => {
         disabled={isDisable}
         onClick={(event) => handleSubmit(event)}
       >
-        Опубликовать
+        {isCreateLoading || isCreateWithNoAddsLoading ? (
+          <ThreeDots />
+        ) : (
+          'Опубликовать'
+        )}
       </Button>
     </StyledNewAdd>
   )

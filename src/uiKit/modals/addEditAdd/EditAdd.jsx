@@ -21,17 +21,18 @@ import {
 import { getCurrentAdd } from '../../../features/adds/addsSlice'
 import { useParams } from 'react-router-dom'
 import { isModalOpen } from '../../../features/modal/modalSlice'
+import { ThreeDots } from 'react-loading-icons'
 
 const EditAdd = () => {
   const { id } = useParams()
   const add = useSelector((state) => state.adds?.currentAdd)
   const dispatch = useDispatch()
   const imgLimit = 5
-  const imgQuality = add.images.length
 
   const [isDisable, setIsDisable] = useState(false)
-  // const [imgQuality, setImgQuality] = useState(add.images.length)
-  // const [preview, setPreview] = useState([])
+  const [preview, setPreview] = useState([])
+  const [files, setFiles] = useState([])
+  const [limit, setLimit] = useState(imgLimit)
   const [values, setValues] = useState({
     title: add.title,
     description: add.description,
@@ -39,7 +40,12 @@ const EditAdd = () => {
     price: add.price,
   })
 
-  const [changeAdd] = useChangeAddMutation()
+  const [
+    changeAdd,
+    { isSuccess: isChangeAddSuccess, isLoading: isChangeAddLoading },
+  ] = useChangeAddMutation()
+  const [deleteImage] = useDeleteAddImageMutation()
+  const [uploadImage] = useUploadImageToAddMutation()
 
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -47,13 +53,53 @@ const EditAdd = () => {
     try {
       const response = await changeAdd({ id: id, body: values })
 
-      console.log(response)
+      // console.log(response)
       dispatch(getCurrentAdd(response.data))
-      dispatch(isModalOpen(false))
     } catch (err) {
       console.log(err)
     }
   }
+
+  const handlePictureChange = (event) => {
+    const newFiles = Object.values(event.target.files)
+      .map((file) => file)
+      .slice(0, 5)
+
+    // console.log(newFiles)
+
+    const objectUrl = []
+    newFiles.forEach((image) => objectUrl.push(URL.createObjectURL(image)))
+
+    setPreview([...preview, ...objectUrl])
+  }
+
+  const handleDeleteImage = async (url) => {
+    try {
+      const query = `?file_url=${url}`
+      const response = await deleteImage({ id, query })
+      dispatch(getCurrentAdd(response.data))
+
+      console.log(response)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect(() => {
+    if (isChangeAddSuccess) {
+      dispatch(isModalOpen(false))
+      setFiles([])
+    }
+  }, [isChangeAddSuccess, dispatch])
+
+  useEffect(() => {
+    setLimit(imgLimit - add.images.length - files.length)
+  }, [add.images.length, files.length])
+
+  useEffect(() => {
+    console.log(preview)
+    console.log(limit)
+  }, [preview, limit])
 
   return (
     <StyledNewAdd>
@@ -88,7 +134,7 @@ const EditAdd = () => {
             type="file"
             multiple
             id="images"
-            // onClick={(event) => handlePictureChange(event)}
+            onClick={(event) => handlePictureChange(event)}
           />
 
           {add?.images.map((img) => (
@@ -96,10 +142,21 @@ const EditAdd = () => {
               src={`${BASE_URL}${img.url}`}
               alt={add.title}
               key={img.id}
+              onClick={() => handleDeleteImage(img.url)}
             />
           ))}
 
-          {Array(imgLimit - imgQuality)
+          {preview &&
+            preview.map((preview, i) => (
+              <UploadedImage
+                src={preview}
+                alt={add.title}
+                key={i}
+                // onClick={() => handleDeletePreview(i)}
+              />
+            ))}
+
+          {Array(limit)
             .fill()
             .map((i) => {
               return (
@@ -129,7 +186,7 @@ const EditAdd = () => {
         type="submit"
         onClick={(event) => handleSubmit(event)}
       >
-        Сохранить
+        {isChangeAddLoading ? <ThreeDots /> : 'Сохранить'}
       </Button>
     </StyledNewAdd>
   )
