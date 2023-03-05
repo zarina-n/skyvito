@@ -52,7 +52,7 @@ Final individual project app which I am building as a part of Front-end Develope
 Clone this repository
 
 ```
-git clone git@github.com:KittySaur/skyvito.git
+git clone https://github.com/KittySaur/skyvito.git
 
 ```
 
