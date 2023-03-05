@@ -125,8 +125,8 @@ const AddAbout = () => {
               <Button
                 margin={'0 10px 10px 0'}
                 onClick={() => {
-                  dispatch(isModalOpen(true))
                   dispatch(getModal('edit-add'))
+                  dispatch(isModalOpen(true))
                 }}
               >
                 Редактировать

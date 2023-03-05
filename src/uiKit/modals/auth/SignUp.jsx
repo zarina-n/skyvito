@@ -2,7 +2,7 @@ import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { getModal, isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'

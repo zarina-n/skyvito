@@ -48,7 +48,7 @@ const Home = () => {
       />
     )
   } else if (isError) {
-    content = { error }
+    content = <p>Произошла ошибка</p>
   }
 
   return (

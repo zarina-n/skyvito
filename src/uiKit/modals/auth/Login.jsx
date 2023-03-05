@@ -2,7 +2,7 @@ import Input from '../../inputs/Input'
 import Button from '../../buttons/Button'
 import WhiteSignUpButton from '../../buttons/WhiteSignUpButton'
 import { Form, LogoContainer, Logo } from './Auth.styled'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { getModal } from '../../../features/modal/modalSlice'
@@ -25,13 +25,7 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  const [login, { isLoading, isError, error }] = useLoginUserMutation({})
-
-  useEffect(() => {
-    if (isError) {
-      setErrorMessage('Неверный логин или пароль')
-    }
-  }, [error, isError, email, password])
+  const [login, { isLoading }] = useLoginUserMutation({})
 
   const handleEmail = (event) => {
     setEmail(event.target.value)
@@ -44,7 +38,6 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
 
-    // if (email && password) {
     if (email === '' && password === '') {
       setErrorMessage('Введите email и пароль')
     } else if (email === '') {

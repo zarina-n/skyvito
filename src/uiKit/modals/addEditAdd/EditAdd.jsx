@@ -160,8 +160,8 @@ const EditAdd = () => {
             .fill()
             .map((i) => {
               return (
-                <label htmlFor="images" key={i}>
-                  <UploadImageDiv />
+                <label key={i} htmlFor="images">
+                  <UploadImageDiv key={i} />
                 </label>
               )
             })}

@@ -172,10 +172,10 @@ const NewAdd = () => {
 
           {Array(imgLimit - imgQuality)
             .fill()
-            .map((index) => {
+            .map((item, i) => {
               return (
-                <label htmlFor="images">
-                  <UploadImageDiv key={index} />
+                <label key={i} htmlFor="images">
+                  <UploadImageDiv key={i} />
                 </label>
               )
             })}
