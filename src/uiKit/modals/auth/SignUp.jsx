@@ -12,7 +12,10 @@ import { setUser } from '../../../features/auth/authSlice'
 
 import { ThreeDots } from 'react-loading-icons'
 
+import { useTranslation } from 'react-i18next'
+
 const SignUp = () => {
+  const { t } = useTranslation(['auth'])
   const dispatch = useDispatch()
   const navigate = useNavigate
 
@@ -37,11 +40,11 @@ const SignUp = () => {
     event.preventDefault()
 
     if (userInfo.email === '' && userInfo.password === '') {
-      setErrorMessage('Введите email и пароль')
+      setErrorMessage(t('enterEmailAndPassword'))
     } else if (userInfo.email === '') {
-      setErrorMessage('Введите email')
+      setErrorMessage(t('enterEmail'))
     } else if (userInfo.password === '') {
-      setErrorMessage('Введите пароль')
+      setErrorMessage(t('enterPassword'))
     } else {
       try {
         if (isValid) {
@@ -55,11 +58,11 @@ const SignUp = () => {
           dispatch(isModalOpen(false))
           navigate('/profile')
         } else {
-          setErrorMessage('Пароли не совпадают')
+          setErrorMessage(t('noPasswordMatch'))
         }
       } catch (err) {
         console.log(err)
-        setErrorMessage('Произошла ошибка')
+        setErrorMessage(t('error'))
       }
     }
   }
@@ -77,7 +80,7 @@ const SignUp = () => {
             email: event.target.value,
           })
         }
-        placeholder={'Email'}
+        placeholder={t('email')}
         type="email"
         name="email"
         width="278px"
@@ -92,7 +95,7 @@ const SignUp = () => {
             password: event.target.value,
           })
         }
-        placeholder={'Пароль'}
+        placeholder={t('password')}
         name="password"
         width="278px"
         required
@@ -101,7 +104,7 @@ const SignUp = () => {
       <Input
         type="password"
         onChange={(event) => setRepeatPswd(event.target.value)}
-        placeholder={'Повторите пароль'}
+        placeholder={t('repeatPassword')}
         width="278px"
         required
       />
@@ -113,7 +116,7 @@ const SignUp = () => {
             name: event.target.value,
           })
         }
-        placeholder={'Имя (необязательно)'}
+        placeholder={t('name')}
         name="name"
         width="278px"
       />
@@ -125,7 +128,7 @@ const SignUp = () => {
             surname: event.target.value,
           })
         }
-        placeholder={'Фамилия (необязательно)'}
+        placeholder={t('surname')}
         name="surname"
         width="278px"
       />
@@ -137,7 +140,7 @@ const SignUp = () => {
             city: event.target.value,
           })
         }
-        placeholder={'Город (необязательно)'}
+        placeholder={t('location')}
         name="city"
         width="278px"
       />
@@ -145,7 +148,7 @@ const SignUp = () => {
       <p>{errorMessage}</p>
 
       <Button type="submit" margin="60px 0 20px 0" width="278px">
-        {isLoading ? <ThreeDots /> : 'Зарегистрироваться'}{' '}
+        {isLoading ? <ThreeDots /> : t('signUp')}
       </Button>
 
       <WhiteSignUpButton
@@ -154,7 +157,7 @@ const SignUp = () => {
           dispatch(getModal('login'))
         }}
       >
-        Войти
+        {t('login')}
       </WhiteSignUpButton>
     </Form>
   )

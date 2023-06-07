@@ -12,8 +12,11 @@ import {
 import { useSelector } from 'react-redux'
 import { BASE_URL } from '../../features/api/apiSlice'
 import { useParams } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Seller = () => {
+  const { t } = useTranslation(['profile'])
+
   const users = useSelector((state) => state.adds?.users)
   const allAdds = useSelector((state) => state.adds?.allAdds)
 
@@ -28,7 +31,7 @@ const Seller = () => {
 
   return (
     <>
-      <Title>Профиль продавца</Title>
+      <Title>{t('sellerProfile')}</Title>
       <SellerInfo>
         <Image
           src={
@@ -40,12 +43,12 @@ const Seller = () => {
         <About>
           <Name>{`${seller[0]?.name} ${seller[0]?.surname}`}</Name>
           <Details>{seller[0]?.city}</Details>
-          <Details>{`Продает товары с ${date}`}</Details>
+          <Details>{`${t('sellsFrom')} ${date}`}</Details>
 
           <ShowNumberButton phoneNumber={seller[0]?.phone}></ShowNumberButton>
         </About>
       </SellerInfo>
-      <Heading>Товары продавца</Heading>
+      <Heading>{t('sellersAds')}</Heading>
       <Adds adds={sellerAdds} />
     </>
   )

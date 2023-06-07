@@ -5,13 +5,13 @@ import { useGetCurrentUserQuery } from '../../features/users/usersApiSlice'
 import { setCurrentUser } from '../../features/users/usersSlice'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { useGetCurrentUserAddsQuery } from '../../features/adds/addsApiSlice'
 import { setUserAdds } from '../../features/adds/addsSlice'
+import { useTranslation } from 'react-i18next'
 
 const Profile = () => {
+  const { t } = useTranslation(['profile'])
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const user = useSelector((state) => state.users?.currentUser)
   const userAddsFromState = useSelector((state) => state.adds?.userAdds)
 
@@ -44,14 +44,14 @@ const Profile = () => {
 
   return (
     <>
-      <Title>Здравствуйте, {data?.name}!</Title>
-      <Heading>Настройки профиля</Heading>
+      <Title>{`${t('hello')} ${data?.name}!`}</Title>
+      <Heading>{t('profileSettings')}</Heading>
       {user && <ProfileForm isSuccess={isSuccess} avatarImg={user?.avatar} />}
-      <Heading>Мои товары</Heading>
+      <Heading>{t('myAds')}</Heading>
       {userAddsFromState ? (
         <Adds adds={userAddsFromState} />
       ) : (
-        <Heading>Пока ваших объявлений нет</Heading>
+        <Heading>{t('noProducts')}</Heading>
       )}
     </>
   )

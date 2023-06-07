@@ -1,0 +1,17 @@
+{
+  "review": "review",
+  "reviews1": "reviews",
+  "reviews2": "reviews",
+  "showPhoneNumber": "Show phone number",
+  "hidePhoneNumber": "Hide phone number",
+  "sellsFrom": "Sells from  ",
+  "productDescription": "Description",
+  "editButton": "Edit",
+  "deleteAdButton": "Delete",
+  "productReviews": "Reviews",
+  "noReviews": "No reviews yet",
+  "addReview": "Add a review",
+  "writeReview": "Enter review",
+  "saveReview": "Add review",
+  "reviewText": "Review"
+}

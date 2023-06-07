@@ -62,6 +62,20 @@ export const Inputs = styled.div`
   div:focus-within label {
     color: ${({ theme }) => theme.colors.primaryBlue};
   }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+
+    input {
+      width: 400px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    input {
+      width: 300px;
+    }
+  }
 `
 
 export const Label = styled.label`

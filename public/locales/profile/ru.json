@@ -1,0 +1,16 @@
+{
+  "hello": "Здравствуйте,",
+  "profileSettings": "Настройки профиля",
+  "photoChange": "Заменить",
+  "name": "Имя",
+  "surname": "Фамилия",
+  "location": "Город",
+  "phone": "Телефон",
+  "saveButton": "Сохранить",
+  "myAds": "Мои товары",
+  "noProducts": "Пока ваших объявлений нет",
+  "sellersAds": "Товары продавца",
+  "sellerProfile": "Профиль продавца",
+  "showPhone": "Показать телефон",
+  "sellsFrom": "продает товары с "
+}

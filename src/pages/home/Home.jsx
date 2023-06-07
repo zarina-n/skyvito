@@ -5,21 +5,17 @@ import { useGetUsersQuery } from '../../features/users/usersApiSlice'
 import { getAllAdds, getUsers } from '../../features/adds/addsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { ThreeDots } from 'react-loading-icons'
 
 const Home = () => {
+  const { t } = useTranslation(['home'])
   const dispatch = useDispatch()
   const allAdds = useSelector((state) => state.adds?.allAdds)
   const searchValue = useSelector((state) => state.adds?.search)
 
-  const {
-    data: adds,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetAllAddsQuery()
+  const { data: adds, isLoading, isSuccess, isError } = useGetAllAddsQuery()
 
   const { data: users } = useGetUsersQuery()
 
@@ -48,12 +44,12 @@ const Home = () => {
       />
     )
   } else if (isError) {
-    content = <p>Произошла ошибка</p>
+    content = <p>{t('error')}</p>
   }
 
   return (
     <div>
-      <Title>Объявления</Title>
+      <Title>{t('ads')}</Title>
       {content}
     </div>
   )

@@ -24,7 +24,11 @@ import { setCurrentAddImages } from '../../features/adds/addsSlice'
 import { useDeleteAddMutation } from '../../features/adds/addsApiSlice'
 import createdOn from '../../components/adds/utils'
 
+import { useTranslation } from 'react-i18next'
+
 const AddAbout = () => {
+  const { t } = useTranslation(['adPage'])
+
   const { id } = useParams()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -92,21 +96,27 @@ const AddAbout = () => {
 
       <AddDetails>
         <Images>
-          {addImages?.map((image, i) => {
-            return (
-              <img
-                src={image.url}
-                alt={image.title}
-                key={image.id}
-                onClick={() => displayImage(addImages, i)}
-              />
-            )
-          })}
+          {addImages.length > 0 ? (
+            addImages?.map((image, i) => {
+              return (
+                <img
+                  src={image.url}
+                  alt={image.title}
+                  key={image.id}
+                  onClick={() => displayImage(addImages, i)}
+                />
+              )
+            })
+          ) : (
+            <img src="/img/no_picture.png" alt="" />
+          )}
         </Images>
         <Details>
           <h1>{add?.title}</h1>
           <ItemInfo>
-            <Text>{createdOn(add?.created_on)}</Text>
+            <Text>
+              {createdOn(add?.created_on, localStorage.getItem('i18nextLng'))}
+            </Text>
             <Text>{add?.user.city}</Text>
             <span
               onClick={() => {
@@ -114,11 +124,16 @@ const AddAbout = () => {
                 dispatch(getModal('reviews'))
               }}
             >
-              {getReviewsLength(currentReviews?.length)}
+              {getReviewsLength(
+                currentReviews?.length,
+                t('review'),
+                t('reviews1'),
+                t('reviews2')
+              )}
             </span>
           </ItemInfo>
 
-          <h3>{`${add?.price} ₽`}</h3>
+          <h3>{add?.price}</h3>
 
           {isCurrentUser ? (
             <>
@@ -129,10 +144,10 @@ const AddAbout = () => {
                   dispatch(isModalOpen(true))
                 }}
               >
-                Редактировать
+                {t('editButton')}
               </Button>
               <Button onClick={() => handleDeleteAdd()}>
-                Снять с публикации
+                {t('deleteAdButton')}
               </Button>
             </>
           ) : (
@@ -148,14 +163,14 @@ const AddAbout = () => {
               <SellerLink to={`/seller/${add?.user.id}`}>
                 {add?.user.name}
               </SellerLink>
-              <Text>{`Продает товары с ${date}`}</Text>
+              <Text>{`${t('sellsFrom')} ${date}`}</Text>
             </div>
           </Seller>
         </Details>
       </AddDetails>
 
       <AddDescription>
-        <h2>Описание товара</h2>
+        <h2>{t('productDescription')}</h2>
         <p>{add?.description}</p>
       </AddDescription>
     </>

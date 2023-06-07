@@ -10,8 +10,11 @@ import {
 } from '../../features/users/usersApiSlice'
 import { BASE_URL } from '../../features/api/apiSlice'
 import { ThreeDots } from 'react-loading-icons'
+import { useTranslation } from 'react-i18next'
 
 const ProfileForm = ({ isSuccess, avatarImg }) => {
+  const { t } = useTranslation(['profile'])
+
   const dispatch = useDispatch()
   const inputRef = React.createRef()
 
@@ -114,12 +117,12 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           id="avatar"
           onChange={(event) => handleAvatar(event)}
         />
-        <label htmlFor="avatar">Заменить</label>
+        <label htmlFor="avatar">{t('photoChange')}</label>
       </Image>
       <Data>
         <Inputs>
           <div>
-            <Label htmlFor="name">Имя</Label>
+            <Label htmlFor="name">{t('name')}</Label>
             <Input
               placeholder={user?.name}
               name="name"
@@ -133,7 +136,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           </div>
 
           <div>
-            <Label htmlFor="surname">Фамилия</Label>
+            <Label htmlFor="surname">{t('surname')}</Label>
             <Input
               placeholder={user?.surname}
               name="surname"
@@ -147,7 +150,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           </div>
 
           <div>
-            <Label htmlFor="city">Город</Label>
+            <Label htmlFor="city">{t('location')}</Label>
             <Input
               placeholder={user?.city}
               name="city"
@@ -161,7 +164,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           </div>
 
           <div>
-            <Label htmlFor="phone">Телефон</Label>
+            <Label htmlFor="phone">{t('phone')}</Label>
             <Input
               placeholder={user?.phone}
               name="phone"
@@ -180,7 +183,7 @@ const ProfileForm = ({ isSuccess, avatarImg }) => {
           onClick={() => handleSubmit()}
           margin="30px 0  0 0"
         >
-          {isUserChangeLoading ? <ThreeDots /> : 'Сохранить'}
+          {isUserChangeLoading ? <ThreeDots /> : t('saveButton')}
         </Button>
       </Data>
     </AccountForm>

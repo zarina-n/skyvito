@@ -19,7 +19,11 @@ import { isModalOpen } from '../../../features/modal/modalSlice'
 import { useDispatch } from 'react-redux'
 import { ThreeDots } from 'react-loading-icons'
 
+import { useTranslation } from 'react-i18next'
+
 const NewAdd = () => {
+  const { t } = useTranslation(['adPlacement'])
+
   const imgLimit = 5
   const dispatch = useDispatch()
   const [
@@ -124,12 +128,12 @@ const NewAdd = () => {
 
   return (
     <StyledNewAdd>
-      <Title>Новое объявление</Title>
-      <Heading>Название</Heading>
+      <Title>{t('newAd')}</Title>
+      <Heading>{t('productName')}</Heading>
       <Input
         type="text"
         width={'100%'}
-        placeholder="Введите название"
+        placeholder={t('enterProductName')}
         name={'title'}
         onChange={(event) => {
           setValues({ ...values, title: event.target.value })
@@ -138,11 +142,11 @@ const NewAdd = () => {
         required
       />
 
-      <Heading>Описание</Heading>
+      <Heading>{t('productDescription')}</Heading>
       <TextArea
         width={'100%'}
         height={'200px'}
-        placeholder="Введите описание"
+        placeholder={t('enterProductDescription')}
         name={'description'}
         onChange={(event) => {
           setValues({ ...values, description: event.target.value })
@@ -152,8 +156,8 @@ const NewAdd = () => {
 
       <Images>
         <div>
-          <Heading>Фотографии товара</Heading>
-          <span>не более 5 фотографий</span>
+          <Heading>{t('productPhotos')}</Heading>
+          <span>{t('photoQuantity')}</span>
         </div>
         <div>
           <input
@@ -182,7 +186,7 @@ const NewAdd = () => {
         </div>
       </Images>
 
-      <Heading>Цена</Heading>
+      <Heading>{t('productPrice')}</Heading>
       <Price>
         <Input
           type="number"
@@ -203,7 +207,7 @@ const NewAdd = () => {
         {isCreateLoading || isCreateWithNoAddsLoading ? (
           <ThreeDots />
         ) : (
-          'Опубликовать'
+          t('placeAdButton')
         )}
       </Button>
     </StyledNewAdd>

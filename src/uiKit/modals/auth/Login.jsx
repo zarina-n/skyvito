@@ -17,7 +17,10 @@ import { isModalOpen } from '../../../features/modal/modalSlice'
 
 import { ThreeDots } from 'react-loading-icons'
 
+import { useTranslation } from 'react-i18next'
+
 const Login = () => {
+  const { t } = useTranslation(['auth'])
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -39,11 +42,11 @@ const Login = () => {
     event.preventDefault()
 
     if (email === '' && password === '') {
-      setErrorMessage('Введите email и пароль')
+      setErrorMessage(t('enterEmailAndPassword'))
     } else if (email === '') {
-      setErrorMessage('Введите email')
+      setErrorMessage(t('enterEmail'))
     } else if (password === '') {
-      setErrorMessage('Введите пароль')
+      setErrorMessage(t('enterPassword'))
     } else {
       try {
         const tokens = await login({
@@ -67,7 +70,7 @@ const Login = () => {
         navigate('/profile')
       } catch (err) {
         console.log(err)
-        setErrorMessage('Неверный логин или пароль')
+        setErrorMessage(t('wrongCredentials'))
       }
     }
   }
@@ -81,27 +84,27 @@ const Login = () => {
 
         <Input
           onChange={(event) => handleEmail(event)}
-          placeholder={'Email'}
+          placeholder={t('email')}
           width="278px"
           type="email"
         />
         <Input
           type="password"
           onChange={(event) => handlePassword(event)}
-          placeholder={'Пароль'}
+          placeholder={t('password')}
           width="278px"
         />
 
         {errorMessage && <p>{errorMessage}</p>}
         <Button type="submit" margin="60px 0 20px 0" width="278px">
-          {isLoading ? <ThreeDots /> : ' Войти'}
+          {isLoading ? <ThreeDots /> : t('login')}
         </Button>
         <WhiteSignUpButton
           onClick={() => {
             dispatch(getModal('sign-up'))
           }}
         >
-          Зарегистрироваться
+          {t('signUp')}
         </WhiteSignUpButton>
       </Form>
     </>

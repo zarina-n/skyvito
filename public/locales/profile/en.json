@@ -1,0 +1,15 @@
+{
+  "hello": "Hello,",
+  "profileSettings": "Profile settings",
+  "photoChange": "Change",
+  "name": "Name",
+  "surname": "Surname",
+  "location": "City",
+  "phone": "Phone number",
+  "saveButton": "Save",
+  "myAds": "My products",
+  "noProducts": "No products yet",
+  "sellersAds": "Seller's products",
+  "sellerProfile": "Seller's profile",
+  "sellsFrom": "sells from "
+}

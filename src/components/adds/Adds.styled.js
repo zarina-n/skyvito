@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 export const AddsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
   column-gap: 26px;
   row-gap: 40px;

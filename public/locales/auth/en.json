@@ -1,0 +1,16 @@
+{
+  "email": "Еmail",
+  "password": "Password",
+  "repeatPassword": "Repeat Password пароль",
+  "name": "Name (optional)",
+  "surname": "Surname (optional)",
+  "location": "City (optional)",
+  "login": "Log in",
+  "signUp": "Sign up",
+  "enterEmailAndPassword": "Enter email and password",
+  "enterEmail": "Enter email",
+  "enterPassword": "Enter password",
+  "wrongCredentials": "Incorrect email or password",
+  "noPasswordMatch": "Passwords do not match",
+  "error": "Error occurred"
+}

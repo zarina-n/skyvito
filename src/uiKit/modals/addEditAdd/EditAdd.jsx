@@ -23,7 +23,10 @@ import { useParams } from 'react-router-dom'
 import { isModalOpen } from '../../../features/modal/modalSlice'
 import { ThreeDots } from 'react-loading-icons'
 
+import { useTranslation } from 'react-i18next'
+
 const EditAdd = () => {
+  const { t } = useTranslation(['adPlacement'])
   const { id } = useParams()
   const add = useSelector((state) => state.adds?.currentAdd)
   const dispatch = useDispatch()
@@ -103,8 +106,8 @@ const EditAdd = () => {
 
   return (
     <StyledNewAdd>
-      <Title>Редактировать объявление</Title>
-      <Heading>Название</Heading>
+      <Title>{t('editAd')}</Title>
+      <Heading>{t('productName')}</Heading>
       <Input
         type="text"
         width={'100%'}
@@ -114,7 +117,7 @@ const EditAdd = () => {
         }}
       />
 
-      <Heading>Описание</Heading>
+      <Heading>{t('productDescription')}</Heading>
       <TextArea
         width={'100%'}
         height={'200px'}
@@ -126,8 +129,8 @@ const EditAdd = () => {
 
       <Images>
         <div>
-          <Heading>Фотографии товара</Heading>
-          <span>не более 5 фотографий</span>
+          <Heading>{t('productPhotos')}</Heading>
+          <span>{t('photoQuantity')}</span>
         </div>
         <div>
           <input
@@ -168,7 +171,7 @@ const EditAdd = () => {
         </div>
       </Images>
 
-      <Heading>Цена</Heading>
+      <Heading>{t('productPrice')}</Heading>
       <Price>
         <Input
           type="text"
@@ -186,7 +189,7 @@ const EditAdd = () => {
         type="submit"
         onClick={(event) => handleSubmit(event)}
       >
-        {isChangeAddLoading ? <ThreeDots /> : 'Сохранить'}
+        {isChangeAddLoading ? <ThreeDots /> : t('saveAdButton')}
       </Button>
     </StyledNewAdd>
   )

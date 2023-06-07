@@ -82,10 +82,10 @@ export const UploadedImage = styled.img`
 export const Price = styled.div`
   position: relative;
 
-  &::after {
+  /* &::after {
     content: url('/img/ruble.png');
     position: absolute;
     top: 17px;
     right: 18px;
-  }
+  } */
 `

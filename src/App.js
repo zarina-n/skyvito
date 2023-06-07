@@ -14,6 +14,8 @@ import RouteLayout from './layouts/RouteLayout'
 
 import RefreshToken from './RefreshToken'
 
+import { Suspense } from 'react'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RouteLayout />}>
@@ -29,7 +31,11 @@ const router = createBrowserRouter(
 
 function App() {
   RefreshToken()
-  return <RouterProvider router={router} />
+  return (
+    <Suspense fallback={null}>
+      <RouterProvider router={router} />
+    </Suspense>
+  )
 }
 
 export default App

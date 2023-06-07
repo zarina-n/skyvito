@@ -1,0 +1,13 @@
+{
+  "newAd": "New Ad",
+  "editAd": "Edit ad",
+  "productName": "Name",
+  "enterProductName": "Enter name",
+  "productDescription": "Description",
+  "enterProductDescription": "Enter description",
+  "productPhotos": "Photos",
+  "photoQuantity": "no more then 5 photos",
+  "productPrice": "price",
+  "placeAdButton": "Add",
+  "saveAdButton": "Save"
+}

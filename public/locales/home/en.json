@@ -1,0 +1,13 @@
+{
+  "signIn": "Login",
+  "profileButton": "Profile",
+  "placeAnAdButton": "New ad",
+  "search": "Search by ads",
+  "findButton": "Find",
+  "ads": "List of ads",
+  "error": "Error occured",
+  "notFound": "Page not found!",
+  "backToMain": "Back to main",
+  "logOut": "Log out",
+  "lng": "Russian (РУ)"
+}

@@ -1,0 +1,17 @@
+{
+  "review": "отзыв",
+  "reviews1": "отзыва",
+  "reviews2": "отзывов",
+  "showPhoneNumber": "Показать телефон",
+  "hidePhoneNumber": "Скрыть телефон",
+  "sellsFrom": "Продает товары с ",
+  "productDescription": "Описание товара",
+  "editButton": "Редактировать",
+  "deleteAdButton": "Снять с публикации",
+  "productReviews": "Отзывы о товаре",
+  "noReviews": "Пока отзывов нет",
+  "addReview": "Добавить отзыв",
+  "writeReview": "Введите отзыв",
+  "saveReview": "Опубликовать",
+  "reviewText": "Комментарий"
+}

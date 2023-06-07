@@ -7,8 +7,11 @@ import { useState, useEffect } from 'react'
 import { getSearchValue } from '../../features/adds/addsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { logUserOut } from '../../features/auth/authSlice'
+import { useTranslation } from 'react-i18next'
 
 const Search = () => {
+  const { t } = useTranslation(['home'])
+
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -30,18 +33,18 @@ const Search = () => {
       {location.pathname === '/' ? (
         <>
           <Input
-            placeholder={'Поиск по объявлениям'}
+            placeholder={t('search')}
             type={'search'}
             width={'100%'}
             onChange={(event) => setSearch(event.target.value)}
           />
 
-          <Button margin={'0 0  0 10px'}>Найти</Button>
+          <Button margin={'0 0  0 10px'}>{t('findButton')}</Button>
         </>
       ) : (
         <>
           <Link to="/">
-            <Button margin={'0 0  0 10px'}>Вернуться на главную</Button>
+            <Button margin={'0 0  0 10px'}>{t('backToMain')}</Button>
           </Link>
 
           {user && (
@@ -52,7 +55,7 @@ const Search = () => {
                 navigate('/')
               }}
             >
-              Выйти
+              {t('logOut')}
             </Button>
           )}
         </>

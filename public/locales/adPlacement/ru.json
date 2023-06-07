@@ -1,0 +1,13 @@
+{
+  "newAd": "Новое объявление",
+  "editAd": "Редактировать объявление",
+  "productName": "Назание",
+  "enterProductName": "Введите название",
+  "productDescription": "Описание",
+  "enterProductDescription": "Введите описание",
+  "productPhotos": "Фотографии товара",
+  "photoQuantity": "не более 5 фотографий",
+  "productPrice": "Цена",
+  "placeAdButton": "Опубликовать",
+  "saveAdButton": "Сохранить"
+}

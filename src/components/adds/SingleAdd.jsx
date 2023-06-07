@@ -18,9 +18,11 @@ const SingleAdd = ({ add }) => {
         />
       </Image>
       <Name>{add.title}</Name>
-      <Price>{`${add.price} ₽`}</Price>
+      <Price>{add.price}</Price>
       <Details>{add.user.city}</Details>
-      <Details>{createdOn(add.created_on)}</Details>
+      <Details>
+        {createdOn(add.created_on, localStorage.getItem('i18nextLng'))}
+      </Details>
     </Add>
   )
 }
