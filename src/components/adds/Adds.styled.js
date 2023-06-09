@@ -2,10 +2,9 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 export const AddsContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  justify-items: center;
   column-gap: 26px;
   row-gap: 40px;
   margin: 43px auto;

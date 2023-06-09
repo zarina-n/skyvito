@@ -96,7 +96,7 @@ const AddAbout = () => {
 
       <AddDetails>
         <Images>
-          {addImages.length > 0 ? (
+          {addImages?.length > 0 ? (
             addImages?.map((image, i) => {
               return (
                 <img
