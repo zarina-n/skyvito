@@ -85,3 +85,4 @@ docker-compose down
 - [x] Redux + Redux Toolkit + RTK Query
 - [x] React Router DOM
 - [x] styled-components
+- [x] i18next 
