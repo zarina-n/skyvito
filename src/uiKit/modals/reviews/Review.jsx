@@ -8,6 +8,7 @@ import {
 import { useSelector } from 'react-redux'
 import { BASE_URL } from '../../../features/api/apiSlice'
 import { useTranslation } from 'react-i18next'
+import createdOn from '../../../components/adds/utils'
 
 const Review = ({ review }) => {
   const { t } = useTranslation(['adPage'])
@@ -26,7 +27,9 @@ const Review = ({ review }) => {
       <Details>
         <NameDate>
           <p>{user[0]?.name}</p>
-          <span>{review?.created_on}</span>
+          <span>
+            {createdOn(review?.created_on, localStorage.getItem('i18nextLng'))}
+          </span>
         </NameDate>
 
         <ReviewContent>
