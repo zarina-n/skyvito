@@ -2,18 +2,20 @@
 
 ## Summary
 
-Final individual project which I am building as a part of Front-end Developer course: a clone of market place
-[Website layout](https://www.figma.com/file/ISqzPS7Sym7V004jFo5buE/%D0%A1%D0%B0%D0%B9%D1%82-%D0%B0%D0%BD%D0%B0%D0%BB%D0%BE%D0%B3-%D0%90%D0%B2%D0%B8%D1%82%D0%BE?node-id=0%3A1&t=B747AbfblY9uBKHb-0)
+A clone of market place.
 
 #### Structure and functionality of the application
-
-(Adaptive design will be added soon)
 
 ##### Home page
 
 - [x] While the user is not authorized, they have access only to the Home page, which displays the products that are placed on the site.
 - [x] The user can search through ads using the product search bar.
 - [x] The user can login or sign up on the site.
+- [x] The user can change language to Russian or English (English is a default language).
+- [x] Most of the ads are in Russian since it was added in Russian to the server from the start.
+
+![image](https://github.com/zarina-n/skyvito/assets/101009726/d63fe098-b6ab-4234-882c-1fb7f05ed2c8)
+
 
 ##### Profile page
 
@@ -23,11 +25,22 @@ Final individual project which I am building as a part of Front-end Developer co
 - [x] “My products” are displayed on the bottom of profile page.
 - [x] Clicking on a product opens a product page
 
+![image](https://github.com/zarina-n/skyvito/assets/101009726/bc790028-3c61-4f91-b6fc-aad61cb339ba)
+
+
 ##### Product page
 
 - [x] Contains the price, name, description of the product, phone number, and name of the seller.
 - [x] Also contains users' reviews of the product.
 - [x] Authorized user can edit or delete their products.
+
+Unauthorized seller
+![image](https://github.com/zarina-n/skyvito/assets/101009726/885e8e45-d821-488f-bc09-51326f5cd7e7)
+
+Authorized seller
+![image](https://github.com/zarina-n/skyvito/assets/101009726/c4b5dbd8-38e6-494a-a6b0-7027a34363d2)
+
+
 
 ##### Seller's page
 
@@ -35,17 +48,29 @@ Final individual project which I am building as a part of Front-end Developer co
 - [x] Button to display the seller's phone number.
 - [x] List of all products by the seller.
 
+![image](https://github.com/zarina-n/skyvito/assets/101009726/8440648a-dd04-41b1-906e-d4bd874dd824)
+
+
 ##### Product reviews popup
 
 - [x] A list of all product reviews with users' names, profile pictures and the date the review was posted.
+
+![image](https://github.com/zarina-n/skyvito/assets/101009726/74097a0f-8267-41c1-ad69-dc128b11a628)
+
 
 ##### New add popup
 
 - [x] The user can add name, description, price of the product, as well as upload up to 5 photos.
 
+![image](https://github.com/zarina-n/skyvito/assets/101009726/c72331dc-5f64-42f8-bd3f-8839c1fcf7ae)
+
+
 ##### Edit add popup
 
-- [x] The user can edit name, description, price of the product, as well as upload up to 5 photos.
+- [x] The user can edit name, description, price of the product, as well as upload up to 5 photos (uploading photos has an error to be fixed soon).
+
+![image](https://github.com/zarina-n/skyvito/assets/101009726/f75212dc-6796-4249-83da-f13805e95b77)
+
 
 #### Installation
 
